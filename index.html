@@ -457,8 +457,8 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             const mapContainer = document.getElementById('map-container');
-            if (!mapContainer || !db) { // 检查 db 是否成功初始化
-                console.error("地图容器或数据库未准备就绪。");
+            if (!mapContainer) {
+                console.error("地图容器未准备就绪。");
                 return;
             }
 
@@ -467,22 +467,26 @@
             // -------------------------------------------------------------
             // 4. Firebase 认证和数据加载
             // -------------------------------------------------------------
-            try {
-                // 登录
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
+            if (auth && db) {
+                try {
+                    // 登录
+                    if (typeof __initial_auth_token !== 'undefined') {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    // 检查是否需要播种初始数据
+                    await seedInitialData();
+
+                    // 启动实时监听
+                    setupSnapshotListener();
+
+                } catch (e) {
+                    console.error("Firebase 认证或数据加载失败:", e);
                 }
-
-                // 检查是否需要播种初始数据
-                await seedInitialData();
-
-                // 启动实时监听
-                setupSnapshotListener();
-
-            } catch (e) {
-                console.error("Firebase 认证或数据加载失败:", e);
+            } else {
+                console.warn("Firebase 未正确配置，将使用默认静态数据渲染地图。");
             }
 
             // 监听地图点击事件
@@ -515,6 +519,9 @@
                     refreshMapView();
                 });
             });
+
+            // 初始渲染一次，确保即使 Firebase 不可用也能显示默认热力图
+            refreshMapView();
 
             // -------------------------------------------------------------
             // 5. 模态框 (Modal) 逻辑
@@ -1075,32 +1082,33 @@
                     extraCssText: 'padding: 0; border: none; box-shadow: none;'
                 },
                 visualMap: {
-                    left: 'left', bottom: '5%',
-                    min   最小值: minPotential,
+                    left: 'left',
+                    bottom: '5%',
+                    min: minPotential,
                     max: maxPotential,
-                    text   文本: config.visualMapText, // 【更新】动态图例文字
-                    calculable: true   真正的,
+                    text: config.visualMapText, // 【更新】动态图例文字
+                    calculable: true,
                     orient: 'horizontal',
                     // 【更新】动态图例颜色
                     inRange: {
-                        color   颜色: config.colors
+                        color: config.colors
                     },
-                    textStyle: { color   颜色: '#cbd5e1' }
+                    textStyle: { color: '#cbd5e1' }
                 },
                 series: [
                     {
-                        name   名字: config.labelKey, // 【更新】动态系列名称
+                        name: config.labelKey, // 【更新】动态系列名称
                         type: 'map',
-                        map   地图: 'china',
-                        roam: true   真正的,
-                        scaleLimit: { min   最小值: 1.2, max: 10 },
-                        selectedMode: false   假,
+                        map: 'china',
+                        roam: true,
+                        scaleLimit: { min: 1.2, max: 10 },
+                        selectedMode: false,
                         // 【美化升级 4: 交互效果增强】
                         emphasis: {
-                            label: { show: true   真正的, color   颜色: '#fff' },
-                            itemStyle: { 
+                            label: { show: true, color: '#fff' },
+                            itemStyle: {
                                 areaColor: '#06b6d4', // 更亮的青色
-                                shadowColor: 'rgba(6, 182, 212, 0.7)', 
+                                shadowColor: 'rgba(6, 182, 212, 0.7)',
                                 shadowBlur: 25 // 更强的辉光
                             }
                         },
@@ -1110,12 +1118,12 @@
                             borderColor: '#475569', // 稍亮的边框
                             borderWidth: 1
                         },
-                        data   数据: mapData
+                        data: mapData
                     }
                 ]
             };
 
-            myChart.setOption(option, true   真正的); // true 表示不合并，完全替换
+            myChart.setOption(option, true); // true 表示不合并，完全替换
         }
 
     </script>
