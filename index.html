@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html   超文本标记语言    < html   超文本标记语言 lang   朗 = "应用" >lang="zh-CN">
-<head   头>
-    <meta charset   字符集="UTF-8">
-    <meta name   名字="viewport"   “视口” content   内容="width=device-width, initial-scale=1.0">
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>政策市场研究地图</title> <!-- 【已修复】添加了Title标签 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Tailwind CSS -->
-    < script   脚本 src = " https://cdn.tailwindcss.com " > < /脚本><script src="https://cdn.tailwindcss.com"></script   脚本>
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入 ECharts -->
-    < script    脚本src = " https://cdn.jsdelivr.net
-pm/echarts@5.5.0 / dist / echarts.min.js " > < /脚本><script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script   脚本>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
     <!-- 引入 ECharts 中国地图数据 -->
-    <script    脚本src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script   脚本>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
     
-    <style   风格>
+    <style>
         /* 使用 Inter 字体，更具现代感 */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
@@ -24,7 +24,7 @@ pm/echarts@5.5.0 / dist / echarts.min.js " > < /脚本><script src="https://cdn.
             100% { background-position: 0% 50%; }
         }
 
-           身体{body    身体{
+        body {
             font-family: 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
             /* 升级背景：使用一个更大的径向渐变图，并应用动画 */
             background-color: #0f172a; 
@@ -32,7 +32,7 @@ pm/echarts@5.5.0 / dist / echarts.min.js " > < /脚本><script src="https://cdn.
                               radial-gradient(circle at 80% 70%, #132a4a 0%, #0f172a 50%);
             background-size: 200% 200%;
             color: #e2e8f0;
-            animation: subtleGradient 25s    年代ease-in-out infinite;
+            animation: subtleGradient 25s ease-in-out infinite;
         }
 
         /* 模态框的淡入淡出动画 */
@@ -1076,28 +1076,28 @@ pm/echarts@5.5.0 / dist / echarts.min.js " > < /脚本><script src="https://cdn.
                 },
                 visualMap: {
                     left: 'left', bottom: '5%',
-                    min: minPotential,
+                    min   最小值: minPotential,
                     max: maxPotential,
-                    text: config.visualMapText, // 【更新】动态图例文字
-                    calculable: true,
+                    text   文本: config.visualMapText, // 【更新】动态图例文字
+                    calculable: true   真正的,
                     orient: 'horizontal',
                     // 【更新】动态图例颜色
                     inRange: {
-                        color: config.colors
+                        color   颜色: config.colors
                     },
-                    textStyle: { color: '#cbd5e1' }
+                    textStyle: { color   颜色: '#cbd5e1' }
                 },
                 series: [
                     {
-                        name: config.labelKey, // 【更新】动态系列名称
+                        name   名字: config.labelKey, // 【更新】动态系列名称
                         type: 'map',
-                        map: 'china',
-                        roam: true,
-                        scaleLimit: { min: 1.2, max: 10 },
-                        selectedMode: false,
+                        map   地图: 'china',
+                        roam: true   真正的,
+                        scaleLimit: { min   最小值: 1.2, max: 10 },
+                        selectedMode: false   假,
                         // 【美化升级 4: 交互效果增强】
                         emphasis: {
-                            label: { show: true, color: '#fff' },
+                            label: { show: true   真正的, color   颜色: '#fff' },
                             itemStyle: { 
                                 areaColor: '#06b6d4', // 更亮的青色
                                 shadowColor: 'rgba(6, 182, 212, 0.7)', 
@@ -1110,15 +1110,15 @@ pm/echarts@5.5.0 / dist / echarts.min.js " > < /脚本><script src="https://cdn.
                             borderColor: '#475569', // 稍亮的边框
                             borderWidth: 1
                         },
-                        data: mapData
+                        data   数据: mapData
                     }
                 ]
             };
 
-            myChart.setOption(option, true); // true 表示不合并，完全替换
+            myChart.setOption(option, true   真正的); // true 表示不合并，完全替换
         }
 
     </script>
 </body>
-
 </html>
+
