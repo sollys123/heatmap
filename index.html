@@ -408,6 +408,14 @@
                             symbol: ['none', 'arrow'],
                             symbolSize: [0, 18],
                             symbolKeepAspect: true,
+                            effect: {
+                                show: true,
+                                symbol: 'arrow',
+                                symbolSize: 10,
+                                trailLength: 0,
+                                constantSpeed: 30,
+                                color: '#2c3e50'
+                            },
                             lineStyle: {
                                 color: '#2c3e50',
                                 width: 3,
@@ -415,6 +423,16 @@
                                 curveness: 0.2
                             },
                             data: flowLinesData
+                        },
+                        // 箭头标记 (Scatter) - 保证箭头显示
+                        {
+                            type: 'scatter',
+                            coordinateSystem: 'geo',
+                            data: flowArrowData,
+                            symbol: 'arrow',
+                            symbolSize: 14,
+                            itemStyle: { color: '#2c3e50' },
+                            zlevel: 6
                         }
                     ]
                 };
