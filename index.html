@@ -275,6 +275,20 @@
             {fromName: '贵州', toName: '广东', coords: [geoCoordMap['贵州'], geoCoordMap['广东']]}
         ];
 
+        const flowArrowData = flowLinesData.map((item) => {
+            const [fromCoord, toCoord] = item.coords;
+            const midCoord = [
+                (fromCoord[0] + toCoord[0]) / 2,
+                (fromCoord[1] + toCoord[1]) / 2
+            ];
+            const angle = Math.atan2(toCoord[1] - fromCoord[1], toCoord[0] - fromCoord[0]) * 180 / Math.PI;
+            return {
+                name: `${item.fromName}-${item.toName}`,
+                value: midCoord,
+                symbolRotate: angle
+            };
+        });
+
         const nameMap = {
             '内蒙古': '内蒙古自治区', '新疆': '新疆维吾尔自治区', '广西': '广西壮族自治区',
             '宁夏': '宁夏回族自治区', '西藏': '西藏自治区', '香港': '香港特别行政区', '澳门': '澳门特别行政区'
@@ -423,6 +437,16 @@
                                 curveness: 0.2
                             },
                             data: flowLinesData
+                        },
+                        // 箭头标记 (Scatter) - 保证箭头显示
+                        {
+                            type: 'scatter',
+                            coordinateSystem: 'geo',
+                            data: flowArrowData,
+                            symbol: 'arrow',
+                            symbolSize: 14,
+                            itemStyle: { color: '#2c3e50' },
+                            zlevel: 6
                         }
                     ]
                 };
