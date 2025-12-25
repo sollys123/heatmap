@@ -54,7 +54,7 @@
         }
         .slide-subtitle {
             font-size: 16px;
-            color: #7f8c8d;
+            color: #90a4ae;
             margin-top: 8px;
             font-weight: 400;
         }
@@ -66,8 +66,8 @@
             margin: 30px 30px 30px 0;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* 阴影也减淡了 */
+            border: 1px solid #f0f0f0;
             z-index: 20;
             display: flex;
             flex-direction: column;
@@ -79,10 +79,10 @@
         .panel-section-title {
             font-size: 18px;
             font-weight: 700;
-            color: #34495e;
+            color: #546e7a;
             margin-bottom: 20px;
             padding-left: 10px;
-            border-left: 5px solid #2980b9;
+            border-left: 5px solid #81d4fa; /* 标题装饰线变浅蓝 */
             line-height: 1;
         }
 
@@ -96,21 +96,21 @@
         .row-label {
             width: 60px;
             font-weight: 600;
-            color: #555;
+            color: #666;
             text-align: right;
             margin-right: 12px;
         }
         .bar-container {
             flex: 1;
-            height: 12px;
-            background: #f0f2f5;
-            border-radius: 6px;
+            height: 10px; /* 稍微变细一点，更精致 */
+            background: #f5f5f5;
+            border-radius: 5px;
             overflow: hidden;
             margin-right: 10px;
         }
         .bar-fill {
             height: 100%;
-            border-radius: 6px;
+            border-radius: 5px;
         }
         .row-value {
             width: 50px;
@@ -119,40 +119,43 @@
             font-family: Consolas, Monaco, monospace;
         }
 
-        .color-in { background-color: #c0392b; }
-        .color-out { background-color: #00897b; }
-        .text-in { color: #c0392b; }
-        .text-out { color: #00897b; }
+        /* 配色 - 减淡版 */
+        .color-in { background-color: #e57373; } /* 柔和红 */
+        .color-out { background-color: #4db6ac; } /* 柔和青 */
+        
+        /* 字体颜色稍微深一点，保证可读性 */
+        .text-in { color: #c62828; } 
+        .text-out { color: #00695c; }
 
         .summary-box {
-            background-color: #f8f9fa;
+            background-color: #fafafa;
             border-radius: 8px;
             padding: 20px;
             margin-top: auto;
-            border: 1px solid #e9ecef;
+            border: 1px solid #eeeeee;
         }
         .summary-text {
             font-size: 14px;
-            color: #555;
+            color: #666;
             line-height: 1.8;
             margin: 0 0 10px 0;
         }
         .summary-text strong {
-            color: #2c3e50;
+            color: #455a64;
         }
 
         .custom-legend {
             position: absolute;
             bottom: 40px;
             left: 40px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.95);
             padding: 15px 20px;
             border-radius: 8px;
             border: 1px solid #eee;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             font-size: 13px;
             line-height: 24px;
-            color: #555;
+            color: #666;
         }
         .legend-item {
             display: flex;
@@ -166,10 +169,10 @@
             margin-right: 8px;
         }
         .legend-arrow {
-            color: #2c3e50;
-            font-weight: 900;
+            color: #78909c;
+            font-weight: bold;
             margin-right: 8px;
-            font-size: 20px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -186,12 +189,12 @@
             <div id="echarts-map" style="width: 100%; height: 100%;"></div>
 
             <div class="custom-legend">
-                <div style="font-weight:700; margin-bottom:8px; color:#333;">图例说明</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>净输入 (缺口 > 1000)</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#ffab91"></div>净输入 (缺口 50-1000)</div>
+                <div style="font-weight:700; margin-bottom:8px; color:#546e7a;">图例说明</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#e57373"></div>净输入 (缺口 > 1000)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#ffcdd2"></div>净输入 (缺口 50-1000)</div>
                 <div class="legend-item"><div class="legend-dot" style="background:#b2dfdb"></div>净输出 (盈余 50-1000)</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#00897b"></div>净输出 (盈余 > 1000)</div>
-                <div class="legend-item"><div class="legend-dot" style="border:1px solid #ccc; background:#fff"></div>基本平衡</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#4db6ac"></div>净输出 (盈余 > 1000)</div>
+                <div class="legend-item"><div class="legend-dot" style="border:1px solid #e0e0e0; background:#fff"></div>基本平衡</div>
                 <div class="legend-item" style="margin-top:5px;"><span class="legend-arrow">➞</span>特高压输电通道</div>
             </div>
         </div>
@@ -208,7 +211,7 @@
             </div>
 
             <div class="summary-box">
-                <div class="panel-section-title" style="border-color: #7f8c8d; margin-bottom: 15px;">📊 格局分析</div>
+                <div class="panel-section-title" style="border-color: #cfd8dc; margin-bottom: 15px;">📊 格局分析</div>
                 <p class="summary-text"><strong>1. 北电南送 (火/风/光)：</strong><br>内蒙(-3084)、山西、新疆作为三大能源基地，支撑京津冀与华东用电。</p>
                 <p class="summary-text"><strong>2. 西电东送 (水/光)：</strong><br>云南(-1787)、四川(-1285)清洁水电主力外送，分别对口支援广东与江浙沪。</p>
                 <p class="summary-text"><strong>3. 负荷中心：</strong><br>广东、浙江、江苏均为近2000亿级净输入大省，对外依存度高。</p>
@@ -249,8 +252,8 @@
 
         // 自定义标签坐标
         const labelFixCoords = {
-            '天津': [118.50, 38.60], 
-            '河北': [115.20, 38.10], 
+            '天津': [118.30, 38.60], 
+            '河北': [114.60, 37.50], 
             '北京': [116.10, 40.80], 
             '上海': [122.80, 31.23], 
             '重庆': [107.50, 30.20],
@@ -286,18 +289,16 @@
             originalName: item.name
         }));
 
-        // 标签数据处理
         const labelData = mapData.map(item => {
             const fixCoord = labelFixCoords[item.originalName];
             const defaultCoord = geoCoordMap[item.originalName];
-            if (!fixCoord && !defaultCoord) return null;
             return {
                 name: item.name,
-                value: fixCoord ? [...fixCoord, item.value] : [...defaultCoord, item.value],
+                value: fixCoord ? [...fixCoord, item.value] : (defaultCoord ? [...defaultCoord, item.value] : null),
                 originalName: item.originalName,
                 displayValue: item.value
             };
-        }).filter(item => item !== null);
+        }).filter(item => item.value !== null);
 
         // --- 渲染右侧条形图 ---
         function renderBars() {
@@ -346,13 +347,13 @@
                         label: { show: false },
                         itemStyle: {
                             borderColor: '#fff',
-                            borderWidth: 1.5,
-                            areaColor: '#f5f5f5',
-                            shadowColor: 'rgba(0, 0, 0, 0.1)',
-                            shadowBlur: 10
+                            borderWidth: 1, /* 边框线也变细一点 */
+                            areaColor: '#fafafa', /* 底色变浅 */
+                            shadowColor: 'rgba(0, 0, 0, 0.05)', /* 阴影变浅 */
+                            shadowBlur: 5
                         },
                         emphasis: {
-                            itemStyle: { areaColor: '#eceff1' },
+                            itemStyle: { areaColor: '#f5f5f5' },
                             label: { show: false }
                         }
                     },
@@ -360,11 +361,11 @@
                         show: false,
                         type: 'piecewise',
                         pieces: [
-                            {min: 1000, color: '#c0392b'},    
-                            {min: 50, max: 999, color: '#ffab91'}, 
+                            {min: 1000, color: '#e57373'},    // 柔和红
+                            {min: 50, max: 999, color: '#ffcdd2'}, // 淡粉红
                             {min: -49, max: 49, color: '#ffffff'}, 
-                            {min: -999, max: -50, color: '#b2dfdb'}, 
-                            {max: -1000, color: '#00897b'}   
+                            {min: -999, max: -50, color: '#b2dfdb'}, // 淡青
+                            {max: -1000, color: '#4db6ac'}   // 柔和青
                         ]
                     },
                     series: [
@@ -373,7 +374,6 @@
                             geoIndex: 0,
                             data: mapData
                         },
-                        // 标签层 (Scatter)
                         {
                             type: 'scatter',
                             coordinateSystem: 'geo',
@@ -390,49 +390,27 @@
                                 },
                                 textShadowColor: '#fff',
                                 textShadowBlur: 3,
-                                textShadowOffsetX: 0,
-                                textShadowOffsetY: 0,
-                                color: '#333', 
+                                color: '#546e7a', /* 字体变浅灰蓝，更融合 */
                                 rich: {
-                                    a: { fontSize: 11, fontWeight: 'bold', lineHeight: 14, color: '#222', textShadowColor: '#fff', textShadowBlur: 3 },
-                                    b: { fontSize: 11, color: '#444', textShadowColor: '#fff', textShadowBlur: 3 }
+                                    a: { fontSize: 11, fontWeight: 'bold', lineHeight: 14, color: '#455a64', textShadowColor: '#fff', textShadowBlur: 3 },
+                                    b: { fontSize: 11, color: '#78909c', textShadowColor: '#fff', textShadowBlur: 3 }
                                 }
                             },
                             zlevel: 3
                         },
-                        // 输电线路 (Lines) - 强化显示
                         {
                             type: 'lines',
-                            coordinateSystem: 'geo',
-                            zlevel: 5,
+                            zlevel: 2,
                             symbol: ['none', 'arrow'],
-                            symbolSize: [0, 18],
-                            symbolKeepAspect: true,
-                            effect: {
-                                show: true,
-                                symbol: 'arrow',
-                                symbolSize: 10,
-                                trailLength: 0,
-                                constantSpeed: 30,
-                                color: '#2c3e50'
-                            },
+                            symbolSize: 8,
+                            effect: { show: false },
                             lineStyle: {
-                                color: '#2c3e50',
-                                width: 3,
-                                opacity: 0.95,
+                                color: '#78909c', /* 箭头颜色减淡 */
+                                width: 1.5,
+                                opacity: 0.5,
                                 curveness: 0.2
                             },
                             data: flowLinesData
-                        },
-                        // 箭头标记 (Scatter) - 保证箭头显示
-                        {
-                            type: 'scatter',
-                            coordinateSystem: 'geo',
-                            data: flowArrowData,
-                            symbol: 'arrow',
-                            symbolSize: 14,
-                            itemStyle: { color: '#2c3e50' },
-                            zlevel: 6
                         }
                     ]
                 };
