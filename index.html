@@ -250,7 +250,7 @@
         // 自定义标签坐标
         const labelFixCoords = {
             '天津': [118.50, 38.60], 
-            '河北': [114.60, 37.50], 
+            '河北': [115.20, 38.10], 
             '北京': [116.10, 40.80], 
             '上海': [122.80, 31.23], 
             '重庆': [107.50, 30.20],
@@ -406,12 +406,12 @@
                             coordinateSystem: 'geo', // 强制指定坐标系
                             zlevel: 5, // 提高层级，确保在最高层
                             symbol: ['none', 'arrow'],
-                            symbolSize: 15, // 增大箭头
-                            effect: { show: false },
+                            symbolSize: [0, 18], // 增大箭头并单独控制末端尺寸
+                            symbolKeepAspect: true,
                             lineStyle: {
                                 color: '#2c3e50', // 加深颜色，改为深蓝黑
                                 width: 3, // 加粗线条
-                                opacity: 0.9,
+                                opacity: 0.95,
                                 curveness: 0.2
                             },
                             data: flowLinesData
