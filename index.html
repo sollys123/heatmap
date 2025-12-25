@@ -2,1152 +2,432 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>政策市场研究地图</title> <!-- 【已修复】添加了Title标签 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 引入 Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 ECharts -->
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-    <!-- 【修复】移除 ECharts 4 的地图数据，这个链接已 404 -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script> -->
-    
+    <title>2024全国电力输送态势图 - PPT专用版</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
-        /* 使用 Inter 字体，更具现代感 */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        /* * 【美化升级 1: 动态渐变背景】
-         * 增加一个缓慢移动的背景动画，提升科技感。
-         */
-        @keyframes subtleGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* 全局重置 */
         body {
-            font-family: 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
-            /* 升级背景：使用一个更大的径向渐变图，并应用动画 */
-            background-color: #0f172a; 
-            background-image: radial-gradient(circle at 20% 30%, #1e293b 0%, #0f172a 40%), 
-                              radial-gradient(circle at 80% 70%, #132a4a 0%, #0f172a 50%);
-            background-size: 200% 200%;
-            color: #e2e8f0;
-            animation: subtleGradient 25s ease-in-out infinite;
+            margin: 0;
+            padding: 0;
+            background-color: #e0e0e0;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        /* 模态框的淡入淡出动画 */
-        #modal, #modal-backdrop {
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-        #modal.hidden {
-            opacity: 0;
-            transform: scale(0.95) translateY(20px);
-        }
-        #modal-backdrop.hidden {
-            opacity: 0;
-        }
-
-        /* 自定义滚动条样式 */
-        .modal-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        .modal-content::-webkit-scrollbar-track {
-            background: #1e293b;
-            border-radius: 3px;
-        }
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #38bdf8; /* 亮蓝色滚动条 */
-            border-radius: 3px;
-        }
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: #7dd3fc;
+        /* 16:9 幻灯片容器 */
+        #slide-container {
+            width: 1600px;
+            height: 900px;
+            background-color: #ffffff;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.2);
+            display: flex;
+            overflow: hidden;
         }
 
-        /* 选项卡激活样式 */
-        .tab-btn.active {
-            border-color: #38bdf8;
-            color: #38bdf8;
-            background-color: rgba(56, 189, 248, 0.1);
+        /* 左侧地图区域 */
+        #map-area {
+            flex: 1;
+            height: 100%;
+            position: relative;
         }
 
-        /* 编辑模式下的输入框样式 */
-        .edit-input, .edit-textarea {
-            width: 100%;
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: #e2e8f0;
-            transition: border-color 0.2s;
+        /* 标题样式 */
+        .slide-header {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            z-index: 10;
         }
-        .edit-input:focus, .edit-textarea:focus {
-            outline: none;
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
+        .slide-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .edit-textarea {
-            min-height: 100px;
-            resize: vertical;
+        .slide-subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-top: 8px;
+            font-weight: 400;
         }
 
-        /* 【新增】热力图切换器样式 */
-        .map-switcher {
-            position: fixed;
-            left: 1rem; /* 16px */
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 20;
-            background-color: rgba(15, 23, 42, 0.7); /* slate-900 with transparency */
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 189, 248, 0.3); /* cyan-500/30 */
+        /* 右侧数据卡片 */
+        #data-panel {
+            width: 420px;
+            height: 840px;
+            margin: 30px 30px 30px 0;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
-            padding: 0.75rem; /* 12px */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            z-index: 20;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem; /* 8px */
+            padding: 30px;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
         }
-        .map-switcher-btn {
-            width: 100%;
-            padding: 0.5rem 1rem; /* 8px 16px */
-            font-family: 'Inter', sans-serif;
-            font-size: 0.875rem; /* 14px */
-            font-weight: 500;
-            color: #cbd5e1; /* slate-300 */
-            background-color: transparent;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-            text-align: left;
+
+        .panel-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #34495e;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 5px solid #2980b9;
+            line-height: 1;
+        }
+
+        /* 条形图样式 */
+        .chart-row {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            margin-bottom: 15px;
+            font-size: 14px;
         }
-        .map-switcher-btn:hover {
-            background-color: rgba(56, 189, 248, 0.1); /* cyan-500/10 */
-            color: #e0f2fe; /* cyan-100 */
-        }
-        .map-switcher-btn.active {
-            background-color: rgba(56, 189, 248, 0.15);
-            color: #38bdf8; /* cyan-500 */
-            border-left-color: #38bdf8; /* Highlight bar */
+        .row-label {
+            width: 60px;
             font-weight: 600;
+            color: #555;
+            text-align: right;
+            margin-right: 12px;
         }
-        /* Icon styles (simple colored dots) */
-        .map-icon {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
+        .bar-container {
+            flex: 1;
+            height: 12px;
+            background: #f0f2f5;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+        }
+        .row-value {
+            width: 50px;
+            text-align: right;
+            font-weight: 700;
+            font-family: Consolas, Monaco, monospace;
+        }
+
+        .color-in { background-color: #c0392b; }
+        .color-out { background-color: #00897b; }
+        .text-in { color: #c0392b; }
+        .text-out { color: #00897b; }
+
+        .summary-box {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: auto;
+            border: 1px solid #e9ecef;
+        }
+        .summary-text {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.8;
+            margin: 0 0 10px 0;
+        }
+        .summary-text strong {
+            color: #2c3e50;
+        }
+
+        .custom-legend {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            background: rgba(255,255,255,0.9);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 13px;
+            line-height: 24px;
+            color: #555;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+        .legend-arrow {
+            color: #2c3e50;
+            font-weight: 900;
+            margin-right: 8px;
+            font-size: 20px;
         }
     </style>
 </head>
-<!-- 【修复】移除 "overflow-hidden" 类，防止地图拖动时被裁切 -->
-<body class="">
+<body>
 
-    <!-- 头部标题 -->
-    <!-- 【美化升级 3: 标题辉光效果】 -->
-    <header class="w-full p-4 shadow-lg bg-gray-900/50 backdrop-blur-sm fixed top-0 left-0 z-10">
-        <h1 class="text-2xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500"
-            style="text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);">
-           政策市场研究地图
-        </h1>
-    </header>
-
-    <!-- 【新增】热力图切换器 -->
-    <div id="map-switcher" class="map-switcher">
-        <!-- 【颜色调整】更新图标颜色 -->
-        <button class="map-switcher-btn active" data-map-key="market_potential">
-            <span class="map-icon" style="background-color: #93c5fd;"></span>
-            综合潜力
-        </button>
-        <button class="map-switcher-btn" data-map-key="frequency_resource">
-            <span class="map-icon" style="background-color: #22d3ee;"></span>
-            调频资源
-        </button>
-        <button class="map-switcher-btn" data-map-key="spot_resource">
-            <span class="map-icon" style="background-color: #fcd34d;"></span>
-            现货资源
-        </button>
-        <button class="map-switcher-btn" data-map-key="capacity_resource">
-            <span class="map-icon" style="background-color: #818cf8;"></span>
-            容量资源
-        </button>
-    </div>
-
-    <!-- ECharts 地图容器 -->
-    <main class="w-full h-screen pt-[64px]">
-        <div id="map-container" class="w-full h-full"></div>
-    </main>
-
-    <!-- 模态框背景 -->
-    <div id="modal-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden"></div>
-
-    <!-- 模态框 -->
-    <!-- 升级美观：边框改为半透明青色 -->
-    <div id="modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-4xl h-[85vh] bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-xl shadow-2xl z-50 hidden flex flex-col">
-        <!-- 模态框头部 -->
-        <div class="flex items-center justify-between p-4 border-b border-gray-700">
-            <h2 id="modal-province-name" class="text-2xl font-semibold text-cyan-400">省份名称</h2>
-            <div class="flex items-center space-x-3">
-                <!-- 【美化升级 5: 按钮渐变】 -->
-                <button id="modal-edit-btn" class="px-3 py-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-lg text-sm font-medium transition-all shadow-md">
-                    <svg class="w-4 h-4 inline-block -mt-px mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
-                    编辑
-                </button>
-                <button id="modal-save-btn" class="px-3 py-1 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 rounded-lg text-sm font-medium transition-all shadow-md hidden">
-                    <svg class="w-4 h-4 inline-block -mt-px mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    保存
-                </button>
-                <button id="modal-close-btn" class="text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- 选项卡导航 -->
-        <nav class="flex p-2 space-x-2 bg-gray-800/50 flex-wrap">
-            <button data-tab="tab-overview" class="tab-btn active px-4 py-2 text-sm font-medium border-b-2 border-transparent rounded-t-lg hover:text-cyan-300 transition-all">概览</button>
-            <button data-tab="tab-resources" class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent rounded-t-lg hover:text-cyan-300 transition-all">资源禀赋</button>
-            <button data-tab="tab-revenue" class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent rounded-t-lg hover:text-cyan-300 transition-all">收益结构</button>
-            <button data-tab="tab-summary" class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent rounded-t-lg hover:text-cyan-300 transition-all">总结建议</button>
-        </nav>
+    <div id="slide-container">
         
-        <!-- 选项卡标签编辑区 (仅编辑模式显示) -->
-        <div id="tab-edit-container" class="p-4 bg-gray-800/50 border-b border-t border-gray-700 hidden">
-            <h3 class="text-base font-medium text-gray-300 mb-2">编辑选项卡名称</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <input id="edit-label-tab_overview" type="text" class="edit-input" value="概览">
-                <input id="edit-label-tab_resources" type="text" class="edit-input" value="资源禀赋">
-                <input id="edit-label-tab_revenue" type="text" class="edit-input" value="收益结构">
-                <input id="edit-label-tab_summary" type="text" class="edit-input" value="总结建议">
+        <div id="map-area">
+            <div class="slide-header">
+                <h1 class="slide-title">2024 全国电力供需与输送态势图</h1>
+                <div class="slide-subtitle">数据来源：2024年全社会用电量与规上发电量统计 | 单位：亿千瓦时</div>
+            </div>
+            
+            <div id="echarts-map" style="width: 100%; height: 100%;"></div>
+
+            <div class="custom-legend">
+                <div style="font-weight:700; margin-bottom:8px; color:#333;">图例说明</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>净输入 (缺口 > 1000)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#ffab91"></div>净输入 (缺口 50-1000)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#b2dfdb"></div>净输出 (盈余 50-1000)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#00897b"></div>净输出 (盈余 > 1000)</div>
+                <div class="legend-item"><div class="legend-dot" style="border:1px solid #ccc; background:#fff"></div>基本平衡</div>
+                <div class="legend-item" style="margin-top:5px;"><span class="legend-arrow">➞</span>特高压输电通道</div>
             </div>
         </div>
 
-
-        <!-- 选项卡内容 -->
-        <div class="p-6 overflow-y-auto flex-1 modal-content">
-            
-            <!-- 概览 -->
-            <div id="tab-overview" class="tab-content text-gray-300 leading-relaxed">
-                <!-- 内容将由 JS 动态填充 -->
+        <div id="data-panel">
+            <div style="margin-bottom: 30px;">
+                <div class="panel-section-title">⚡ 净输出 TOP 5 (送端/卖电)</div>
+                <div id="export-bars"></div>
             </div>
 
-            <!-- 资源禀赋 -->
-            <div id="tab-resources" class="tab-content hidden space-y-6">
-                <!-- 内容将由 JS 动态填充 -->
+            <div style="margin-bottom: 30px;">
+                <div class="panel-section-title">🔌 净输入 TOP 5 (受端/买电)</div>
+                <div id="import-bars"></div>
             </div>
 
-            <!-- 收益结构 -->
-            <div id="tab-revenue" class="tab-content hidden space-y-6">
-                <!-- 内容将由 JS 动态填充 -->
+            <div class="summary-box">
+                <div class="panel-section-title" style="border-color: #7f8c8d; margin-bottom: 15px;">📊 格局分析</div>
+                <p class="summary-text"><strong>1. 北电南送 (火/风/光)：</strong><br>内蒙(-3084)、山西、新疆作为三大能源基地，支撑京津冀与华东用电。</p>
+                <p class="summary-text"><strong>2. 西电东送 (水/光)：</strong><br>云南(-1787)、四川(-1285)清洁水电主力外送，分别对口支援广东与江浙沪。</p>
+                <p class="summary-text"><strong>3. 负荷中心：</strong><br>广东、浙江、江苏均为近2000亿级净输入大省，对外依存度高。</p>
             </div>
-
-            <!-- 总结建议 -->
-            <div id="tab-summary" class="tab-content hidden text-gray-300 leading-relaxed">
-                <!-- 内容将由 JS 动态填充 -->
-            </div>
-
         </div>
     </div>
 
-    <!-- Firebase 和 ECharts 脚本 -->
-    <script type="module">
-        // -----------------------------------------------------------------
-        // 1. Firebase 集成
-        // -----------------------------------------------------------------
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, onSnapshot, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        // --- 数据配置 ---
+        const rawData = [
+            {name: "内蒙古", value: -3084}, {name: "云南", value: -1787}, {name: "山西", value: -1547},
+            {name: "四川", value: -1285}, {name: "新疆", value: -1213}, {name: "宁夏", value: -846},
+            {name: "陕西", value: -789}, {name: "贵州", value: -700}, {name: "湖北", value: -639},
+            {name: "甘肃", value: -534}, {name: "福建", value: -254}, {name: "安徽", value: -249},
+            {name: "吉林", value: -187}, {name: "黑龙江", value: -122}, {name: "青海", value: 0}, 
+            {name: "广东", value: 1909}, {name: "浙江", value: 1799}, {name: "江苏", value: 1757},
+            {name: "山东", value: 1548}, {name: "河北", value: 1116}, {name: "北京", value: 935},
+            {name: "上海", value: 899}, {name: "河南", value: 589}, {name: "湖南", value: 487},
+            {name: "辽宁", value: 452}, {name: "重庆", value: 400}, {name: "天津", value: 252},
+            {name: "江西", value: 225}, {name: "广西", value: 133}, {name: "海南", value: 50},
+            {name: "西藏", value: 0}
+        ];
 
-        // Firebase 配置和 App ID (由环境提供)
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        
-        // 初始化 Firebase
-        let app, auth, db, collectionPath;
-        try {
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            // 使用公共数据路径，以便所有用户共享
-            collectionPath = `/artifacts/${appId}/public/data/provinces`;
-        } catch (e) {
-            console.error("Firebase 初始化失败:", e);
-        }
-
-        // -----------------------------------------------------------------
-        // 2. 初始/默认数据
-        // -----------------------------------------------------------------
-        
-        // 默认标签
-        const defaultLabels = {
-            // Tab Names
-            tab_overview: "概览",
-            tab_resources: "资源禀赋",
-            tab_revenue: "收益结构",
-            tab_summary: "总结建议",
-            
-            // Overview Tab
-            potentials_title: "各项潜力", // 【新增】潜力区块的标题
-            market_potential: "市场潜力",
-            overview_title: "概览",
-            // 【新增】热力图切换相关的标签
-            frequency_resource: "调频资源潜力",
-            spot_resource: "现货套利空间",
-            capacity_resource: "容量补偿价值",
-
-            // Resources Tab
-            supply_demand_title: "供需关系",
-            load: "负荷", 
-            generation: "发电侧", 
-            new_storage: "新型储能", 
-            curtailment: "弃电情况",
-            
-            grid_title: "网架情况",
-            substations: "变电站", 
-            interconnection: "互联互通", 
-            status: "总体情况", 
-            conclusion: "总结",
-
-            // Revenue Tab
-            energy_title: "电能量市场",
-            long_term: "中长期", 
-            spot: "现货", 
-            
-            ancillary_title: "辅助服务",
-            frequency: "调频", 
-            other: "其他服务",
-
-            capacity_title: "容量市场",
-            compensation: "容量补偿", 
-            leasing: "容量租赁",
-
-            // Summary Tab
-            summary_title: "综合总结",
-            business_model: "业务类型", 
-            revenue_estimate: "收益预估", 
-            cost: "成本", 
-            recommendation: "建议"
-        };
-        
-        // 数据库为空时，用于“播种”的初始数据
-        const initialProvinceData = {
-            "广东": {
-                market_potential: 95,
-                // 【新增】热力图切换相关数据
-                frequency_resource: 90,
-                spot_resource: 85,
-                capacity_resource: 70,
-                overview: "广东省作为经济大省，用电负荷高，峰谷差大，为独立储能提供了广阔的应用场景。政策支持力度大，正积极推进现货市场和辅助服务市场建设。",
-                resources: {
-                    supply_demand: { load: "工业和商业负荷为主，占比超70%。夏季制冷负荷高，季节性波动明显。", generation: "总装机200GW。火电占比45%，光伏15%，风电10%，水电10%，核电15%，新型储能5GW。", new_storage: "已有5GW，在建10GW，规划20GW。", curtailment: "新能源弃电率低于2%，消纳情况良好。" },
-                    grid: { substations: "500kV变电站100座，750kV双回路5条。", interconnection: "通过“八交十inject”特高压工程与西部、北部电网紧密互联。", status: "主要为受入省份，网架坚强，省内互联互通性好。", conclusion: "网架发达，阻塞风险低，有利于储能灵活调用。" }
-                },
-                revenue: {
-                    energy: { long_term: "已开展中长期交易，峰谷价差约0.7元/kWh。储能可作为独立主体参与。", spot: "已进入长周期试运行。现货价差波动大，为储能套利提供空间。" },
-                    ancillary: { frequency: "二次调频市场成熟，AGC补偿（K值）约15元/MW。储能是主力军。", other: "备用、黑启动等市场正在试点。" },
-                    capacity: { compensation: "已出台容量补偿政策，按放电量给予0.3元/kWh补偿。", leasing: "容量租赁市场初步形成，价格约300元/kW/年。" }
-                },
-                summary: { business_model: "独立储能。主要收益模式：现货市场套利 + 辅助服务（调频）。", revenue_estimate: "预计年化收益率可达8-10%。", cost: "LCOS 约 0.5元/kWh。", recommendation: "建议重点布局珠三角负荷中心，积极参与现货与调频市场。" },
-                labels: { ...defaultLabels } // 初始数据使用默认标签
-            },
-            "江苏": {
-                market_potential: 92,
-                // 【新增】热力图切换相关数据
-                frequency_resource: 80,
-                spot_resource: 60,
-                capacity_resource: 85,
-                overview: "江苏省是传统用电大省，工商业发达。省内新能源装机比例快速提升，对灵活性资源需求迫切。政策走在全国前列。",
-                resources: {
-                    supply_demand: { load: "工业负荷占比极高，峰谷差明显。", generation: "火电主导，海上风电全国第一，光伏装机量大。", new_storage: "已有4GW，在建8GW，规划15GW。", curtailment: "局部时段存在弃光风险。" },
-                    grid: { substations: "电网结构坚强，500kV变电站密集。", interconnection: "与华北、华中电网联系紧密。", status: "受入、送出并重，过网电量大。", conclusion: "省内电网发达，但苏北新能源向苏南负荷中心输送存在一定瓶颈。" }
-                },
-                revenue: {
-                    energy: { long_term: "峰谷价差0.8元/kWh。鼓励储能参与中长期交易。", spot: "尚未进入长周期试运行，处于试点阶段。" },
-                    ancillary: { frequency: "调频市场相对成熟，但规模小于广东。", other: "备用市场已启动。" },
-                    capacity: { compensation: "明确容量电价补偿机制。", leasing: "租赁市场活跃，价格约280元/kW/年。" }
-                },
-                summary: { business_model: "独立储能、配储。", revenue_estimate: "预计年化收益率7-9%。", cost: "LCOS 约 0.52元/kWh。", recommendation: "重点关注苏南负荷中心及苏北新能源汇集站。现阶段以容量租赁和调频为主，未来现货市场潜力大。" },
-                labels: { ...defaultLabels }
-            },
-            "内蒙古": {
-                market_potential: 85,
-                // 【新增】热力图切换相关数据
-                frequency_resource: 75,
-                spot_resource: 70,
-                capacity_resource: 40,
-                overview: "内蒙古是国家重要能源基地，“风光”资源丰富，是“西电东送”的主力。新能源装机占比高，调峰调频需求巨大。",
-                resources: {
-                    supply_demand: { load: "高耗能工业（如电解铝）负荷大，负荷曲线相对平稳。", generation: "火电占比高，但风电、光伏装机量均居全国首位。季节性水电（黄河）有一定影响。", new_storage: "已有6GW，在建15GW，规划30GW（多为新能源配储）。", curtailment: "部分区域弃风弃光率较高，消纳问题突出。" },
-                    grid: { substations: "蒙西、蒙东电网分开运行。特高压外送通道多。", interconnection: "蒙西接入华北，蒙东接入东北。", status: "主要为送出省份。", conclusion: "外送通道能力决定新能源消纳上限。省内网架相对薄弱，存在阻塞风险。" }
-                },
-                revenue: {
-                    energy: { long_term: "中长期交易为主，峰谷价差较小，约0.4元/kWh。", spot: "蒙西电网现货市场运行较早，但价格波动性受限。" },
-                    ancillary: { frequency: "调频市场活跃，需求量大。", other: "备用市场空间大。" },
-                    capacity: { compensation: "容量补偿政策尚不明确。", leasing: "新能源配储租赁需求大，但价格偏低。" }
-                },
-                summary: { business_model: "独立储能、新能源配储。", revenue_estimate: "预计年化收益率5-7%。", cost: "LCOS 约 0.48元/kWh。", recommendation: "重点参与调峰辅助服务和现货市场。关注网架阻塞情况。新能源配储转独立租赁是未来趋势。" },
-                labels: { ...defaultLabels }
-            }
+        // 基础经纬度
+        const geoCoordMap = {
+            '新疆': [86.61, 42.79], '内蒙古': [112.67, 41.81], '四川': [103.06, 30.66],
+            '云南': [101.71, 24.04], '山西': [112.54, 37.85], '宁夏': [106.27, 37.46],
+            '甘肃': [103.82, 36.05], '陕西': [108.94, 34.26], '广东': [113.28, 23.12],
+            '江苏': [119.76, 33.04], '浙江': [120.15, 29.28], '山东': [118.00, 36.67],
+            '北京': [116.40, 40.40], '上海': [121.47, 31.23], '河南': [113.66, 33.75],
+            '安徽': [117.28, 31.86], '湖南': [111.98, 27.59], '湖北': [112.29, 31.00],
+            '河北': [115.50, 38.04], '贵州': [106.71, 26.57], '广西': [108.32, 23.52],
+            '黑龙江': [128.00, 47.50], '吉林': [126.20, 43.80], '海南': [109.70, 19.10],
+            '天津': [117.20, 39.08], '重庆': [107.50, 29.80], '江西': [115.50, 27.80],
+            '辽宁': [122.50, 41.30], '福建': [118.00, 26.00], '青海': [96.00, 35.50],
+            '西藏': [89.00, 31.50]
         };
 
-        // 当数据库没有对应省份数据时，显示的默认信息
-        const defaultData = {
-            market_potential: 20,
-            // 【新增】热力图切换相关数据
-            frequency_resource: 10,
-            spot_resource: 10,
-            capacity_resource: 10,
-            overview: "暂无详细数据。该省份的独立储能市场正在研究中，相关政策和市场机制尚未成熟。",
-            resources: {
-                supply_demand: { load: "N/A", generation: "N/A", new_storage: "N/A", curtailment: "N/A" },
-                grid: { substations: "N/A", interconnection: "N/A", status: "N/A", conclusion: "N/A" }
-            },
-            revenue: {
-                energy: { long_term: "N/A", spot: "N/A" },
-                ancillary: { frequency: "N/A", other: "N/A" },
-                capacity: { compensation: "N/A", leasing: "N/A" }
-            },
-            summary: { business_model: "N/A", revenue_estimate: "N/A", cost: "N/A", recommendation: "N/A" },
-            labels: { ...defaultLabels } // 默认数据也使用默认标签
+        // 自定义标签坐标
+        const labelFixCoords = {
+            '天津': [118.50, 38.60], 
+            '河北': [114.60, 37.50], 
+            '北京': [116.10, 40.80], 
+            '上海': [122.80, 31.23], 
+            '重庆': [107.50, 30.20],
+            '香港': [114.10, 22.00],
+            '澳门': [113.50, 22.00]
         };
 
-        // -----------------------------------------------------------------
-        // 3. ECharts 地图初始化
-        // -----------------------------------------------------------------
-        let myChart; // ECharts 实例
-        let currentProvince = null; // 当前查看的省份
-        let isEditMode = false; // 当前是否处于编辑模式
-        let provinceData = {}; // 用于存储从 Firebase 拉取的数据
-        let currentMapKey = 'market_potential'; // 【新增】当前激活的热力图键
-        
-        // 【新增】热力图配置
-        const mapDataConfig = {
-            'market_potential': {
-                title: '市场潜力',
-                labelKey: 'market_potential',
-                visualMapText: ['高（潜力）', '低（潜力）'],
-                // 【颜色调整】起始颜色更深
-                colors: ['#0a192e', '#112b59', '#1d4ed8', '#3b82f6', '#93c5fd']
-            },
-            'frequency_resource': {
-                title: '调频资源',
-                labelKey: 'frequency_resource',
-                visualMapText: ['高（需求）', '低（需求）'],
-                // 【颜色调整】起始颜色更深
-                colors: ['#051c24', '#083344', '#0e7490', '#06b6d4', '#22d3ee'] 
-            },
-            'spot_resource': {
-                title: '现货资源',
-                labelKey: 'spot_resource',
-                visualMapText: ['高（价差）', '低（价差）'],
-                // 【颜色调整】起始颜色更深，并移除最亮的黄色
-                colors: ['#1f1100', '#4e2307', '#78350f', '#b45309', '#f59e0b']
-            },
-            'capacity_resource': {
-                title: '容量资源',
-                labelKey: 'capacity_resource',
-                visualMapText: ['高（价值）', '低（价值）'],
-                // 【颜色调整】起始颜色更深，并移除最亮的紫色
-                colors: ['#141233', '#1e1b4b', '#312e81', '#4f46e5', '#818cf8']
-            }
+        const flowLinesData = [
+            {fromName: '新疆', toName: '河南', coords: [geoCoordMap['新疆'], geoCoordMap['河南']]},
+            {fromName: '新疆', toName: '安徽', coords: [geoCoordMap['新疆'], geoCoordMap['安徽']]},
+            {fromName: '宁夏', toName: '浙江', coords: [geoCoordMap['宁夏'], geoCoordMap['浙江']]},
+            {fromName: '甘肃', toName: '湖南', coords: [geoCoordMap['甘肃'], geoCoordMap['湖南']]},
+            {fromName: '陕西', toName: '湖北', coords: [geoCoordMap['陕西'], geoCoordMap['湖北']]},
+            {fromName: '内蒙古', toName: '山东', coords: [geoCoordMap['内蒙古'], geoCoordMap['山东']]},
+            {fromName: '内蒙古', toName: '北京', coords: [geoCoordMap['内蒙古'], geoCoordMap['北京']]},
+            {fromName: '山西', toName: '江苏', coords: [geoCoordMap['山西'], geoCoordMap['江苏']]},
+            {fromName: '四川', toName: '江苏', coords: [geoCoordMap['四川'], geoCoordMap['江苏']]},
+            {fromName: '四川', toName: '上海', coords: [geoCoordMap['四川'], geoCoordMap['上海']]},
+            {fromName: '四川', toName: '浙江', coords: [geoCoordMap['四川'], geoCoordMap['浙江']]},
+            {fromName: '湖北', toName: '上海', coords: [geoCoordMap['湖北'], geoCoordMap['上海']]},
+            {fromName: '云南', toName: '广东', coords: [geoCoordMap['云南'], geoCoordMap['广东']]},
+            {fromName: '贵州', toName: '广东', coords: [geoCoordMap['贵州'], geoCoordMap['广东']]}
+        ];
+
+        const nameMap = {
+            '内蒙古': '内蒙古自治区', '新疆': '新疆维吾尔自治区', '广西': '广西壮族自治区',
+            '宁夏': '宁夏回族自治区', '西藏': '西藏自治区', '香港': '香港特别行政区', '澳门': '澳门特别行政区'
         };
 
-        let activeProvinceNames = []; // 【新增】用于存储从地图数据中解析出的省份名称
+        const mapData = rawData.map(item => ({
+            name: nameMap[item.name] || (item.name.match(/北京|天津|上海|重庆/) ? item.name + '市' : item.name + '省'),
+            value: item.value,
+            originalName: item.name
+        }));
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            
-            // 【修复】ECharts 5+ 需要手动获取和注册地图数据
-            let chinaMapData = null;
-            try {
-                // 【修复】使用 jsdelivr 的 CDN 链接，替换 ECharts 官方示例链接
-                const response = await fetch('https://cdn.jsdelivr.net/npm/echarts/map/json/china.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                chinaMapData = await response.json();
-                
-                // 注册地图
-                echarts.registerMap('china', chinaMapData);
-                console.log("中国地图数据加载并注册成功。");
+        // 标签数据处理
+        const labelData = mapData.map(item => {
+            const fixCoord = labelFixCoords[item.originalName];
+            const defaultCoord = geoCoordMap[item.originalName];
+            if (!fixCoord && !defaultCoord) return null;
+            return {
+                name: item.name,
+                value: fixCoord ? [...fixCoord, item.value] : [...defaultCoord, item.value],
+                originalName: item.originalName,
+                displayValue: item.value
+            };
+        }).filter(item => item !== null);
 
-                // 【新增】从地图数据中提取省份名称列表
-                activeProvinceNames = chinaMapData.features.map(f => f.properties.name);
+        // --- 渲染右侧条形图 ---
+        function renderBars() {
+            const exportData = [...rawData].sort((a, b) => a.value - b.value).slice(0, 5);
+            const importData = [...rawData].sort((a, b) => b.value - a.value).slice(0, 5);
+            const maxVal = Math.max(Math.abs(exportData[0].value), Math.abs(importData[0].value));
 
-            } catch (e) {
-                console.error("加载中国地图数据失败:", e);
-                // 如果加载失败，使用硬编码的列表作为备用
-                activeProvinceNames = allProvinceNames; 
-            }
-
-
-            const mapContainer = document.getElementById('map-container');
-            if (!mapContainer || !db) { // 检查 db 是否成功初始化
-                console.error("地图容器或数据库未准备就绪。");
-                return;
-            }
-
-            myChart = echarts.init(mapContainer, null, { renderer: 'svg' });
-
-            // -------------------------------------------------------------
-            // 4. Firebase 认证和数据加载
-            // -------------------------------------------------------------
-            try {
-                // 登录
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                // 检查是否需要播种初始数据
-                await seedInitialData();
-
-                // 启动实时监听
-                setupSnapshotListener();
-
-            } catch (e) {
-                console.error("Firebase 认证或数据加载失败:", e);
-            }
-
-            // 监听地图点击事件
-            myChart.on('click', (params) => {
-                // 【修复】使用从 GeoJSON 加载的省份列表进行检查
-                if (params.name && activeProvinceNames.includes(params.name)) {
-                    currentProvince = params.name;
-                    openModal(currentProvince);
-                } else {
-                    console.log("点击了无效区域:", params.name);
-                }
-            });
-
-            // 窗口大小调整时重绘地图
-            window.addEventListener('resize', () => {
-                myChart.resize();
-            });
-
-            // 【新增】绑定热力图切换器事件
-            const switcherButtons = document.querySelectorAll('.map-switcher-btn');
-            switcherButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // 移除所有按钮的 active 状态
-                    switcherButtons.forEach(btn => btn.classList.remove('active'));
-                    // 为点击的按钮添加 active 状态
-                    button.classList.add('active');
-                    // 更新当前的热力图键
-                    currentMapKey = button.dataset.mapKey;
-                    // 刷新地图视图
-                    refreshMapView();
-                });
-            });
-
-            // -------------------------------------------------------------
-            // 5. 模态框 (Modal) 逻辑
-            // -------------------------------------------------------------
-            const modal = document.getElementById('modal');
-            const backdrop = document.getElementById('modal-backdrop');
-            const closeBtn = document.getElementById('modal-close-btn');
-            const editBtn = document.getElementById('modal-edit-btn');
-            const saveBtn = document.getElementById('modal-save-btn');
-            const provinceNameEl = document.getElementById('modal-province-name');
-            const tabs = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            // 选项卡按钮
-            const tabBtnOverview = document.querySelector('button[data-tab="tab-overview"]');
-            const tabBtnResources = document.querySelector('button[data-tab="tab-resources"]');
-            const tabBtnRevenue = document.querySelector('button[data-tab="tab-revenue"]');
-            const tabBtnSummary = document.querySelector('button[data-tab="tab-summary"]');
-            
-            // 选项卡编辑容器
-            const tabEditContainer = document.getElementById('tab-edit-container');
-
-            // 打开模态框函数
-            function openModal(provinceName) {
-                provinceNameEl.textContent = provinceName;
-                
-                const data = provinceData[provinceName] || defaultData;
-                const labels = data.labels || defaultData.labels;
-
-                // 设置选项卡名称 (查看模式)
-                tabBtnOverview.textContent = labels.tab_overview;
-                tabBtnResources.textContent = labels.tab_resources;
-                tabBtnRevenue.textContent = labels.tab_revenue;
-                tabBtnSummary.textContent = labels.tab_summary;
-
-                // 填充查看模式的内容
-                buildModalContent(false);
-
-                // 重置到第一个选项卡
-                switchTab(tabs[0]);
-
-                // 显示模态框
-                modal.classList.remove('hidden');
-                backdrop.classList.remove('hidden');
-            }
-
-            // 关闭模态框函数
-            function closeModal() {
-                modal.classList.add('hidden');
-                backdrop.classList.add('hidden');
-                currentProvince = null;
-                isEditMode = false; // 退出时重置编辑模式
-                // 确保按钮状态重置
-                editBtn.classList.remove('hidden');
-                saveBtn.classList.add('hidden');
-                tabEditContainer.classList.add('hidden'); // 隐藏标签编辑区
-            }
-
-            // 切换选项卡函数
-            function switchTab(clickedTab) {
-                const targetId = clickedTab.dataset.tab;
-                tabs.forEach(tab => tab.classList.remove('active'));
-                clickedTab.classList.add('active');
-                tabContents.forEach(content => {
-                    content.id === targetId ? content.classList.remove('hidden') : content.classList.add('hidden');
-                });
-            }
-
-            // 切换编辑/保存模式
-            function toggleEditMode(editOn) {
-                isEditMode = editOn;
-                editBtn.classList.toggle('hidden', editOn);
-                saveBtn.classList.toggle('hidden', !editOn);
-                tabEditContainer.classList.toggle('hidden', !editOn); // 显示/隐藏标签编辑区
-                
-                // 如果进入编辑模式，填充标签编辑框
-                if(editOn) {
-                    const data = provinceData[currentProvince] || defaultData;
-                    const labels = data.labels || defaultData.labels;
-                    document.getElementById('edit-label-tab_overview').value = labels.tab_overview;
-                    document.getElementById('edit-label-tab_resources').value = labels.tab_resources;
-                    document.getElementById('edit-label-tab_revenue').value = labels.tab_revenue;
-                    document.getElementById('edit-label-tab_summary').value = labels.tab_summary;
-                }
-                
-                // 重建模态框内容以反映模式变化
-                buildModalContent(editOn);
-            }
-
-            // 保存数据到 Firebase
-            async function saveData() {
-                if (!currentProvince || !isEditMode || !db) return; 
-
-                // 禁用保存按钮，防止重复点击
-                saveBtn.disabled = true;
-                saveBtn.textContent = "保存中...";
-
-                try {
-                    // 1. 获取当前数据，以便合并
-                    const currentData = provinceData[currentProvince] || JSON.parse(JSON.stringify(defaultData));
-                    
-                    // 2. 构造要保存的 `labels` 对象
-                    const labelsToSave = { ...currentData.labels }; // Start with existing labels
-
-                    // 2a. 保存选项卡标签
-                    labelsToSave.tab_overview = document.getElementById('edit-label-tab_overview').value;
-                    labelsToSave.tab_resources = document.getElementById('edit-label-tab_resources').value;
-                    labelsToSave.tab_revenue = document.getElementById('edit-label-tab_revenue').value;
-                    labelsToSave.tab_summary = document.getElementById('edit-label-tab_summary').value;
-
-                    // 2b. 保存 Overview 标签
-                    labelsToSave.potentials_title = document.getElementById('edit-label-potentials_title').value; // 【新增】
-                    labelsToSave.market_potential = document.getElementById('edit-label-market_potential').value;
-                    labelsToSave.overview_title = document.getElementById('edit-label-overview_title').value;
-                    // 【新增】保存新热力图的标签
-                    labelsToSave.frequency_resource = document.getElementById('edit-label-frequency_resource').value;
-                    labelsToSave.spot_resource = document.getElementById('edit-label-spot_resource').value;
-                    labelsToSave.capacity_resource = document.getElementById('edit-label-capacity_resource').value;
-
-                    // 2c. 保存 Resources 标签
-                    labelsToSave.supply_demand_title = document.getElementById('edit-label-supply_demand_title').value;
-                    labelsToSave.grid_title = document.getElementById('edit-label-grid_title').value;
-                    Object.keys(defaultData.resources.supply_demand).forEach(key => {
-                        labelsToSave[key] = document.getElementById(`edit-label-res-sd-${key}`).value;
-                    });
-                    Object.keys(defaultData.resources.grid).forEach(key => {
-                        labelsToSave[key] = document.getElementById(`edit-label-res-grid-${key}`).value;
-                    });
-
-                    // 2d. 保存 Revenue 标签
-                    labelsToSave.energy_title = document.getElementById('edit-label-energy_title').value;
-                    labelsToSave.ancillary_title = document.getElementById('edit-label-ancillary_title').value;
-                    labelsToSave.capacity_title = document.getElementById('edit-label-capacity_title').value;
-                    Object.keys(defaultData.revenue.energy).forEach(key => {
-                        labelsToSave[key] = document.getElementById(`edit-label-rev-energy-${key}`).value;
-                    });
-                    Object.keys(defaultData.revenue.ancillary).forEach(key => {
-                        labelsToSave[key] = document.getElementById(`edit-label-rev-ancillary-${key}`).value;
-                    });
-                    Object.keys(defaultData.revenue.capacity).forEach(key => {
-                        labelsToSave[key] = document.getElementById(`edit-label-rev-capacity-${key}`).value;
-                    });
-                    
-                    // 2e. 保存 Summary 标签
-                    labelsToSave.summary_title = document.getElementById('edit-label-summary_title').value;
-                    Object.keys(defaultData.summary).forEach(key => {
-                        labelsToSave[key] = document.getElementById(`edit-label-sum-summary-${key}`).value;
-                    });
-
-                    // 3. 构造要保存的 `data` (内容) 对象
-                    const dataToSave = {
-                        ...currentData,
-                        labels: labelsToSave, // 存入新的 labels
-                        
-                        // 概览
-                        overview: document.getElementById('edit-overview-overview').value,
-                        market_potential: parseInt(document.getElementById('edit-overview-market_potential').value, 10) || 0,
-                        // 【新增】保存新热力图的值
-                        frequency_resource: parseInt(document.getElementById('edit-overview-frequency_resource').value, 10) || 0,
-                        spot_resource: parseInt(document.getElementById('edit-overview-spot_resource').value, 10) || 0,
-                        capacity_resource: parseInt(document.getElementById('edit-overview-capacity_resource').value, 10) || 0,
-                        
-                        // 资源禀赋
-                        resources: { supply_demand: {}, grid: {} },
-                        // 收益结构
-                        revenue: { energy: {}, ancillary: {}, capacity: {} },
-                        // 总结
-                        summary: {}
-                    };
-
-                    // 3a. 填充内容嵌套对象
-                    Object.keys(defaultData.resources.supply_demand).forEach(key => {
-                        dataToSave.resources.supply_demand[key] = document.getElementById(`edit-res-sd-${key}`).value;
-                    });
-                    Object.keys(defaultData.resources.grid).forEach(key => {
-                        dataToSave.resources.grid[key] = document.getElementById(`edit-res-grid-${key}`).value;
-                    });
-                    Object.keys(defaultData.revenue.energy).forEach(key => {
-                        dataToSave.revenue.energy[key] = document.getElementById(`edit-rev-energy-${key}`).value;
-                    });
-                    Object.keys(defaultData.revenue.ancillary).forEach(key => {
-                        dataToSave.revenue.ancillary[key] = document.getElementById(`edit-rev-ancillary-${key}`).value;
-                    });
-                    Object.keys(defaultData.revenue.capacity).forEach(key => {
-                        dataToSave.revenue.capacity[key] = document.getElementById(`edit-rev-capacity-${key}`).value;
-                    });
-                    Object.keys(defaultData.summary).forEach(key => {
-                        dataToSave.summary[key] = document.getElementById(`edit-sum-summary-${key}`).value;
-                    });
-
-                    // 4. 写入 Firebase
-                    const docRef = doc(db, collectionPath, currentProvince);
-                    await setDoc(docRef, dataToSave, { merge: true });
-
-                    // 5. 切换回查看模式
-                    toggleEditMode(false);
-                    
-                    // 手动更新选项卡按钮的文本
-                    tabBtnOverview.textContent = labelsToSave.tab_overview;
-                    tabBtnResources.textContent = labelsToSave.tab_resources;
-                    tabBtnRevenue.textContent = labelsToSave.tab_revenue;
-                    tabBtnSummary.textContent = labelsToSave.tab_summary;
-
-                } catch (e) {
-                    console.error("保存数据到 Firebase 失败:", e);
-                } finally {
-                    // 重新启用保存按钮
-                    saveBtn.disabled = false;
-                    saveBtn.innerHTML = `<svg class="w-4 h-4 inline-block -mt-px mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>保存`;
-                }
-            }
-
-            // 绑定事件
-            closeBtn.addEventListener('click', closeModal);
-            backdrop.addEventListener('click', closeModal);
-            editBtn.addEventListener('click', () => toggleEditMode(true));
-            saveBtn.addEventListener('click', saveData);
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => switchTab(tab));
-            });
-
-
-            // -------------------------------------------------------------
-            // 6. 动态 HTML 构建函数
-            // -------------------------------------------------------------
-
-            // 根据编辑模式构建所有选项卡的内容
-            function buildModalContent(editMode) {
-                if (!currentProvince) return;
-                // 从全局的 provinceData 中获取数据，如果不存在则使用 defaultData
-                const data = provinceData[currentProvince] || defaultData;
-                const labels = data.labels || defaultData.labels; // 获取标签
-                
-                const buildFunc = editMode ? buildEditHtml : buildViewHtml;
-                
-                // 传递 data 和 labels
-                document.getElementById('tab-overview').innerHTML = buildFunc.overview(data, labels);
-                document.getElementById('tab-resources').innerHTML = buildFunc.resources(data.resources, labels);
-                document.getElementById('tab-revenue').innerHTML = buildFunc.revenue(data.revenue, labels);
-                // 总结部分：编辑模式传完整data，查看模式传data.summary
-                document.getElementById('tab-summary').innerHTML = buildFunc.summary(editMode ? data : data.summary, labels);
-            }
-            
-            // 构建查看模式的 HTML
-            const buildViewHtml = {
-                overview: (data, labels) => {
-                    // 【重构】1. 创建一个潜力数据对象
-                    const potentialsData = {
-                        market_potential: data.market_potential || 0,
-                        frequency_resource: data.frequency_resource || 0,
-                        spot_resource: data.spot_resource || 0,
-                        capacity_resource: data.capacity_resource || 0
-                    };
-                    
-                    // 【重构】2. 使用标准区块构建函数来显示潜力数据
-                    const potentialsHtml = buildSectionView(
-                        labels.potentials_title || "各项潜力", 
-                        potentialsData, 
-                        labels // labels 对象已包含所有需要的键
-                    );
-
-                    // 【重构】3. 构建概览文本区块
-                    const overviewHtml = `
-                        <div class="my-6 border-t border-gray-700"></div>
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-3">${labels.overview_title}</h3>
-                        <p class="text-base text-gray-200">${data.overview}</p>
-                    `;
-
-                    // 【重构】4. 返回合并后的 HTML
-                    return potentialsHtml + overviewHtml;
-                },
-                resources: (data, labels) => `
-                    ${buildSectionView(labels.supply_demand_title, data.supply_demand, labels)}
-                    <div class="my-6 border-t border-gray-700"></div>
-                    ${buildSectionView(labels.grid_title, data.grid, labels)}
-                `,
-                revenue: (data, labels) => `
-                    ${buildSectionView(labels.energy_title, data.energy, labels)}
-                    <div class="my-6 border-t border-gray-700"></div>
-                    ${buildSectionView(labels.ancillary_title, data.ancillary, labels)}
-                    <div class="my-6 border-t border-gray-700"></div>
-                    ${buildSectionView(labels.capacity_title, data.capacity, labels)}
-                `,
-                summary: (data, labels) => buildSectionView(labels.summary_title, data, labels) // data 应该是 data.summary
+            const createBar = (item, type) => {
+                const percent = (Math.abs(item.value) / maxVal) * 100;
+                const colorClass = type === 'out' ? 'color-out' : 'color-in';
+                const textClass = type === 'out' ? 'text-out' : 'text-in';
+                const sign = type === 'in' ? '+' : '';
+                return `
+                    <div class="chart-row">
+                        <div class="row-label">${item.name}</div>
+                        <div class="bar-container">
+                            <div class="bar-fill ${colorClass}" style="width: ${percent}%"></div>
+                        </div>
+                        <div class="row-value ${textClass}">${sign}${Math.abs(item.value)}</div>
+                    </div>
+                `;
             };
 
-            // 构建编辑模式的 HTML
-            const buildEditHtml = {
-                overview: (data, labels) => `
-                    <div class="space-y-4">
-                        <!-- 【重构】各项潜力编辑区块 -->
-                        <div>
-                            <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                            <input id="edit-label-potentials_title" type="text" class="edit-input" value="${labels.potentials_title || '各项潜力'}">
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-800/50 p-4 rounded-lg mt-3">
-                            <div class="bg-gray-900 p-3 rounded-lg border border-gray-700">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段标签</label>
-                                <input id="edit-label-market_potential" type="text" class="edit-input mb-2" value="${labels.market_potential}">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段内容</label>
-                                <input id="edit-overview-market_potential" type="number" class="edit-input" value="${data.market_potential}">
-                            </div>
-                            <div class="bg-gray-900 p-3 rounded-lg border border-gray-700">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段标签</label>
-                                <input id="edit-label-frequency_resource" type="text" class="edit-input mb-2" value="${labels.frequency_resource || '调频资源潜力'}">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段内容</label>
-                                <input id="edit-overview-frequency_resource" type="number" class="edit-input" value="${data.frequency_resource || 0}">
-                            </div>
-                            <div class="bg-gray-900 p-3 rounded-lg border border-gray-700">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段标签</label>
-                                <input id="edit-label-spot_resource" type="text" class="edit-input mb-2" value="${labels.spot_resource || '现货套利空间'}">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段内容</label>
-                                <input id="edit-overview-spot_resource" type="number" class="edit-input" value="${data.spot_resource || 0}">
-                            </div>
-                            <div class="bg-gray-900 p-3 rounded-lg border border-gray-700">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段标签</label>
-                                <input id="edit-label-capacity_resource" type="text" class="edit-input mb-2" value="${labels.capacity_resource || '容量补偿价值'}">
-                                <label class="text-sm font-medium text-gray-400 mb-1 block">字段内容</label>
-                                <input id="edit-overview-capacity_resource" type="number" class="edit-input" value="${data.capacity_resource || 0}">
-                            </div>
-                        </div>
-
-                        <div class="my-6 border-t border-gray-700"></div>
-
-                        <!-- 【重构】概览文本区块 -->
-                        <div>
-                            <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                            <input id="edit-label-overview_title" type="text" class="edit-input" value="${labels.overview_title}">
-                        </div>
-                        <div class="bg-gray-800/50 p-4 rounded-lg mt-3">
-                            <label class="text-sm font-medium text-gray-400 mb-1 block">字段内容</label>
-                            <textarea id="edit-overview-overview" class="edit-textarea">${data.overview}</textarea>
-                        </div>
-                    </div>
-                `,
-                resources: (data, labels) => `
-                    <div>
-                        <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                        <input id="edit-label-supply_demand_title" type="text" class="edit-input" value="${labels.supply_demand_title}">
-                    </div>
-                    ${buildSectionEdit(data.supply_demand, labels, "res-sd", Object.keys(defaultData.resources.supply_demand))}
-                    
-                    <div class="my-6 border-t border-gray-700"></div>
-                    
-                    <div>
-                        <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                        <input id="edit-label-grid_title" type="text" class="edit-input" value="${labels.grid_title}">
-                    </div>
-                    ${buildSectionEdit(data.grid, labels, "res-grid", Object.keys(defaultData.resources.grid))}
-                `,
-                revenue: (data, labels) => `
-                    <div>
-                        <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                        <input id="edit-label-energy_title" type="text" class="edit-input" value="${labels.energy_title}">
-                    </div>
-                    ${buildSectionEdit(data.energy, labels, "rev-energy", Object.keys(defaultData.revenue.energy))}
-
-                    <div class="my-6 border-t border-gray-700"></div>
-                    
-                    <div>
-                        <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                        <input id="edit-label-ancillary_title" type="text" class="edit-input" value="${labels.ancillary_title}">
-                    </div>
-                    ${buildSectionEdit(data.ancillary, labels, "rev-ancillary", Object.keys(defaultData.revenue.ancillary))}
-
-                    <div class="my-6 border-t border-gray-700"></div>
-
-                    <div>
-                        <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                        <input id="edit-label-capacity_title" type="text" class="edit-input" value="${labels.capacity_title}">
-                    </div>
-                    ${buildSectionEdit(data.capacity, labels, "rev-capacity", Object.keys(defaultData.revenue.capacity))}
-                `,
-                summary: (data, labels) => `
-                    <div>
-                        <label class="text-lg font-semibold text-cyan-400 mb-2 block">区块标题</label>
-                        <input id="edit-label-summary_title" type="text" class="edit-input" value="${labels.summary_title}">
-                    </div>
-                    ${buildSectionEdit(data.summary, labels, "sum-summary", Object.keys(defaultData.summary))}
-                `
-            };
-
-            // 辅助函数 - 构建查看模式的区块
-            function buildSectionView(title, data, labels) {
-                if (!data) return ''; // 安全检查
-                let html = `<h3 class="text-xl font-semibold text-cyan-400 mb-3">${title}</h3>`;
-                html += '<dl class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 bg-gray-800/50 p-4 rounded-lg">';
-                for (const [key, value] of Object.entries(data)) {
-                    html += `
-                        <div class="flex flex-col">
-                            <dt class="text-sm font-medium text-gray-400">${labels[key] || key}</dt>
-                            <dd class="text-base text-gray-200 mt-1">${value}</dd>
-                        </div>
-                    `;
-                }
-                html += '</dl>';
-                return html;
-            }
-            
-            // 辅助函数 - 构建编辑模式的区块
-            function buildSectionEdit(data, labels, prefix, defaultKeys) {
-                if (!data) data = {}; // 安全检查
-                
-                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 bg-gray-800/50 p-4 rounded-lg mt-3">';
-                
-                for (const key of defaultKeys) {
-                    const value = data[key] || ''; // 如果值不存在，则为空字符串
-                    const label = labels[key] || key;
-                    html += `
-                        <div class="bg-gray-900 p-3 rounded-lg border border-gray-700">
-                            <label for="edit-label-${prefix}-${key}" class="text-sm font-medium text-gray-400 mb-1 block">字段标签</label>
-                            <input id="edit-label-${prefix}-${key}" type="text" class="edit-input mb-2" value="${label}">
-                            
-                            <label for="edit-${prefix}-${key}" class="text-sm font-medium text-gray-400 mb-1 block">字段内容</label>
-                            <textarea id="edit-${prefix}-${key}" class="edit-textarea" style="min-height: 80px;">${value}</textarea>
-                        </div>
-                    `;
-                }
-                html += '</div>';
-                return html;
-            }
-        });
-        
-        // -------------------------------------------------------------
-        // 7. Firebase 数据处理与地图更新
-        // -------------------------------------------------------------
-
-        // 检查数据库是否为空，如果为空，则用 initialProvinceData 填充
-        async function seedInitialData() {
-            if (!db) return;
-            const collectionRef = collection(db, collectionPath);
-            const snapshot = await getDocs(collectionRef);
-            
-            if (snapshot.empty) {
-                console.log("数据库为空，正在播种初始数据...");
-                const batch = writeBatch(db);
-                for (const [provinceName, data] of Object.entries(initialProvinceData)) {
-                    const docRef = doc(db, collectionPath, provinceName);
-                    batch.set(docRef, data);
-                }
-                await batch.commit();
-                console.log("初始数据播种完毕。");
-            } else {
-                console.log("数据库已包含数据，无需播种。");
-            }
+            document.getElementById('export-bars').innerHTML = exportData.map(d => createBar(d, 'out')).join('');
+            document.getElementById('import-bars').innerHTML = importData.map(d => createBar(d, 'in')).join('');
         }
+        renderBars();
 
-        // 设置 Firebase 实时监听器
-        function setupSnapshotListener() {
-            if (!db) return;
-            const collectionRef = collection(db, collectionPath);
-            
-            onSnapshot(collectionRef, (snapshot) => {
-                console.log("接收到数据更新...");
-                // 清空旧的本地数据
-                provinceData = {}; 
-                
-                // 用数据库的新数据填充本地数据
-                snapshot.forEach((doc) => {
-                    provinceData[doc.id] = doc.data();
-                });
-                
-                // 使用新数据刷新地图
-                refreshMapView();
+        // --- 地图初始化 ---
+        const myChart = echarts.init(document.getElementById('echarts-map'));
+        myChart.showLoading();
 
-                // 如果模态框正打开，也刷新模态框的内容（仅在查看模式下）
-                if (currentProvince && !isEditMode) {
-                    const data = provinceData[currentProvince] || defaultData;
-                    const labels = data.labels || defaultData.labels;
-                    
-                    // 更新选项卡按钮文本
-                    document.querySelector('button[data-tab="tab-overview"]').textContent = labels.tab_overview;
-                    document.querySelector('button[data-tab="tab-resources"]').textContent = labels.tab_resources;
-                    document.querySelector('button[data-tab="tab-revenue"]').textContent = labels.tab_revenue;
-                    document.querySelector('button[data-tab="tab-summary"]').textContent = labels.tab_summary;
-                    
-                    // 重建内容
-                    buildModalContent(false);
-                }
-            }, (error) => {
-                console.error("Firebase 实时监听失败:", error);
-            });
-        }
-        
-        // 【修复】这个列表现在作为备用
-        const allProvinceNames = ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '上海', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '重庆', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '台湾', '香港', '澳门'];
+        fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
+            .then(response => response.json())
+            .then(geoJson => {
+                myChart.hideLoading();
+                echarts.registerMap('china', geoJson);
 
-        // ECharts 地图更新函数
-        function refreshMapView() {
-            if (!myChart) return;
-            
-            // 【更新】获取当前热力图的配置
-            const config = mapDataConfig[currentMapKey];
-
-            // 准备 ECharts series.data (只包含有数据的省份)
-            // 【修复】使用 activeProvinceNames (如果加载成功) 或 allProvinceNames (作为备用)
-            const provinceListName = activeProvinceNames.length > 0 ? activeProvinceNames : allProvinceNames;
-            const mapData = provinceListName.map(name => ({
-                name: name,
-                value: (provinceData[name] || defaultData)[currentMapKey] || 0 // 【更新】使用 currentMapKey
-            }));
-
-            // 动态计算所有省份的潜力值（包括默认值）
-            const potentialValues = provinceListName.map(name => (provinceData[name] || defaultData)[currentMapKey]); // 【更新】使用 currentMapKey
-
-            const minPotential = Math.min(...potentialValues);
-            const maxPotential = Math.max(...potentialValues);
-
-            const option = {
-                backgroundColor: 'transparent',
-                title: {
-                    text: '独立储能' + config.title + '热力图', // 【更新】动态标题
-                    subtext: '点击省份查看详细政策与收益分析',
-                    left: 'center', 
-                    // 升级美观：调整标题位置
-                    top: '4%', 
-                    textStyle: { color: '#e2e8f0', fontSize: 24, fontWeight: 'bold' },
-                    subtextStyle: { color: '#94a3b8', fontSize: 16 }
-                },
-                tooltip: {
-                    trigger: 'item',
-                    showDelay: 0,
-                    transitionDuration: 0.2,
-                    formatter: function (params) {
-                        const data = provinceData[params.name] || defaultData;
-                        // 获取总结数据和标签
-                        const summary = data.summary || defaultData.summary;
-                        const labels = data.labels || defaultData.labels;
-                        
-                        // 【更新】获取当前热力图的标签和值
-                        const currentLabel = labels[config.labelKey] || config.title;
-                        const currentValue = data[currentMapKey] || 0;
-                        
-                        // 所有的样式（背景、边框、圆角、阴影、内边距）都定义在这个 div 上
-                        return `<div style="
-                            width: 220px; 
-                            white-space: normal; 
-                            padding: 12px 15px; 
-                            background: rgba(23, 37, 61, 0.9); 
-                            border: 1px solid #38bdf8; 
-                            border-radius: 8px; 
-                            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-                            color: #e2e8f0;
-                        ">
-                            <strong class="text-base font-semibold">${params.name}</strong><br/>
-                            <!-- 【更新】Tooltip 内容，显示综合潜力和当前选中的热力图数据 -->
-                            <div class="mt-2 pt-1 border-t border-gray-600">${labels.market_potential}: <span class="font-bold text-cyan-400 text-lg ml-1">${data.market_potential}</span></div>
-                            
-                            ${currentMapKey !== 'market_potential' ? 
-                                `<div class="mt-1">${currentLabel}: <span class="font-bold text-yellow-400 text-lg ml-1">${currentValue}</span></div>` : ''
-                            }
-
-                            <div class="mt-1">${labels.revenue_estimate}: <span class="font-semibold text-gray-200">${summary.revenue_estimate}</span></div>
-                            <div class="mt-1">${labels.business_model}: <span class="font-semibold text-gray-200">${summary.business_model}</span></div>
-                            <div class="text-xs text-gray-400 mt-2 border-t border-gray-600 pt-1 opacity-80">点击查看详情</div>
-                        </div>`;
-                    },
-                    // 重置 ECharts 默认的外部容器样式，实现“一个框框”
-                    写成backgroundColor:“透明”,backgroundColor: 'transparent'   “透明”,
-                    borderColor:“透明”,borderColor: 'transparent'   “透明”,
-                    extraCssText: 'padding: 0；边界:没有;不必:没有;extraCssText: '填充:0;边界:没有;不必:没有;padding   填充: 0; border   边境: none; box-shadow   影子: none;'
-                },
-                visualMap: {
-                    left   左: 'left', bottom: '5%',
-                       闵:minPotentialmin   最小值: minPotential,
-                       马克斯:maxPotential,max   马克斯: maxPotential,
-                    text   文本: config   配置.visualMapText, // 【更新】动态图例文字
-                    calculable: true   真正的,
-                    orient: 'horizontal',
-                    // 【更新】动态图例颜色
-                    inRange: {
-                        color   颜色: config   配置.colors   颜色
-                    },
-                    textStyle: { color   颜色: '#cbd5e1' }
-                },
-                   系列:[series   系列: [
-                    {
-                        name   名字: config   配置.labelKey, // 【更新】动态系列名称
-                           类型:“地图”,type   类型: 'map'   “地图”,
-                           地图:“中国”,map   地图: 'china'   “中国”,
-                           漫游:没错,roam   漫游: true   真正的,
-                        scaleLimit: {min   最小值: 1.2, max   马克斯: 10}，scaleLimit: { min   最小值: 1.2, max   马克斯: 10 },
-                           selectedMode:假的,selectedMode: false   假,
-                        // 【美化升级 4: 交互效果增强】
-                           重点:{emphasis   强调: {
-                            标签：{show   显示: true， color   颜色: '#fff'}，label   标签: { show   显示: true   真正的, color   颜色: '#fff' },
-                            itemStyle: { 
-                                areaColor: '#06b6d4'   “# 06 b6d4”, // 更亮的青色
-                                shadowColor: 'rgba(6,182,212,0.7)'，shadowColor: 'rgba(6, 182, 212, 0.7)'   ‘rgba(6, 182, 212, 0.7)’, 
-                                shadowBlur: 25 // 更强的辉光
-                            }
-                        },
-                        // 【美化升级 6: 地图底色优化】
+                const option = {
+                    backgroundColor: 'transparent',
+                    geo: {
+                        map: 'china',
+                        roam: true,
+                        zoom: 1.1,
+                        center: [104, 36],
+                        label: { show: false },
                         itemStyle: {
-                            areaColor: 'rgba(30, 41, 59, 0.6)'   ‘rgba(30, 41, 59, 0.6)’, // 使用带透明度的 slate-800
-                            borderColor: '#475569', // 稍亮的边框
-                            borderWidth: 1
+                            borderColor: '#fff',
+                            borderWidth: 1.5,
+                            areaColor: '#f5f5f5',
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
                         },
-                        data   数据: mapData
-                    }
-                ]
-            };
+                        emphasis: {
+                            itemStyle: { areaColor: '#eceff1' },
+                            label: { show: false }
+                        }
+                    },
+                    visualMap: {
+                        show: false,
+                        type: 'piecewise',
+                        pieces: [
+                            {min: 1000, color: '#c0392b'},    
+                            {min: 50, max: 999, color: '#ffab91'}, 
+                            {min: -49, max: 49, color: '#ffffff'}, 
+                            {min: -999, max: -50, color: '#b2dfdb'}, 
+                            {max: -1000, color: '#00897b'}   
+                        ]
+                    },
+                    series: [
+                        {
+                            type: 'map',
+                            geoIndex: 0,
+                            data: mapData
+                        },
+                        // 标签层 (Scatter)
+                        {
+                            type: 'scatter',
+                            coordinateSystem: 'geo',
+                            data: labelData,
+                            symbolSize: 1,
+                            label: {
+                                show: true,
+                                formatter: function(params) {
+                                    const val = params.data.displayValue;
+                                    const name = params.data.originalName;
+                                    if (val === 0) return `{b|${name}}`;
+                                    const sign = val > 0 ? '+' : '';
+                                    return `{b|${name}}\n{a|${sign}${val}}`;
+                                },
+                                textShadowColor: '#fff',
+                                textShadowBlur: 3,
+                                textShadowOffsetX: 0,
+                                textShadowOffsetY: 0,
+                                color: '#333', 
+                                rich: {
+                                    a: { fontSize: 11, fontWeight: 'bold', lineHeight: 14, color: '#222', textShadowColor: '#fff', textShadowBlur: 3 },
+                                    b: { fontSize: 11, color: '#444', textShadowColor: '#fff', textShadowBlur: 3 }
+                                }
+                            },
+                            zlevel: 3
+                        },
+                        // 输电线路 (Lines) - 强化显示
+                        {
+                            type: 'lines',
+                            coordinateSystem: 'geo', // 强制指定坐标系
+                            zlevel: 5, // 提高层级，确保在最高层
+                            symbol: ['none', 'arrow'],
+                            symbolSize: 15, // 增大箭头
+                            effect: { show: false },
+                            lineStyle: {
+                                color: '#2c3e50', // 加深颜色，改为深蓝黑
+                                width: 3, // 加粗线条
+                                opacity: 0.9,
+                                curveness: 0.2
+                            },
+                            data: flowLinesData
+                        }
+                    ]
+                };
 
-            myChart.setOption(option   选项, true   真正的); // true 表示不合并，完全替换
-        }
+                myChart.setOption(option);
+            })
+            .catch(error => {
+                console.error("加载失败:", error);
+            });
 
-    </script>   > < /脚本
-</body>   身体< / >
+        window.addEventListener('resize', () => {
+            myChart.resize();
+        });
+    </script>
+</body>
 </html>
