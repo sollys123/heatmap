@@ -62,10 +62,10 @@
             name: '甘肃',
             title: '甘肃',
             kpis: [
-                { label: '调频总额', value: '2500-2600 万元/月' },
-                { label: '现货价差(均值)', value: '0.253 元/kWh' },
-                { label: '调频上限', value: '15 元/MW' },
-                { label: '容量电价', value: '330 元/kW·年（执行2年）' }
+                { label: '调频总额', value: '1200-1600 万元/月' },
+                { label: '现货价差(均值)', value: '0.188 元/kWh' },
+                { label: '调频上限', value: '12 元/MW' },
+                { label: '容量电价', value: '280 元/kW·年（示例）' }
             ],
             accordions: [
                 {
@@ -73,32 +73,32 @@
                     title: '资源禀赋 & 电网背景',
                     type: 'list',
                     items: [
-                        '区位：位于西北电网中心，是西电东送的重要通道、西北电力交换枢纽',
-                        '结构错配：新能源基地（河西走廊）与负荷中心（河东兰州等地）错配，网架阻塞突出，形成对调频等辅助服务的刚性需求',
-                        '新能源资源：风能可开发量 5.6 亿 kW；太阳能可开发量 95 亿 kW（资源理论储量全国第4）',
-                        '规划：到 2025 年新能源装机 8000 万 kW；2030 年突破 1.6 亿 kW',
-                        '装机概况：截至 2025 年 9 月，全口径装机容量 11612.75 万 kW；风光装机占比约 61%',
-                        '新能源分布：河西走廊地区（张掖、武威、金昌）优势明显；日照时间长、强度高、戈壁大漠适合大型基地；风力强劲且稳定',
-                        '负荷与调峰：2024 年全社会用电量 1746.33 亿 kWh；最大用电负荷 2395 万 kW；峰谷差 400–500 万 kW；最大调峰缺口超 1000 万 kW'
+                        '区位：示例区域内的能源枢纽节点，承担跨区交换与外送通道角色',
+                        '结构错配：示例基地与负荷中心存在错配，网架约束导致辅助服务需求增加',
+                        '新能源资源：风能可开发量约 4.2 亿 kW；太阳能可开发量约 72 亿 kW（示例排名）',
+                        '规划：到 2026 年新能源装机约 6800 万 kW；2031 年突破 1.3 亿 kW',
+                        '装机概况：截至 2025 年 9 月，全口径装机容量约 9850 万 kW；风光装机占比约 57%',
+                        '新能源分布：西部走廊示范区优势明显；日照时间长、戈壁地貌适合大型基地；风资源稳定',
+                        '负荷与调峰：2024 年全社会用电量约 1520 亿 kWh；最大用电负荷 2050 万 kW；峰谷差 320–420 万 kW；最大调峰缺口约 820 万 kW'
                     ],
                     capacityData: {
                         title: '装机容量结构（万千瓦）',
                         headers: ['电源类型', '装机容量', '占比'],
                         rows: [
-                            { type: '火电', capacity: '3150.21', share: '27.13%' },
-                            { type: '水电', capacity: '971.61', share: '8.37%' },
-                            { type: '风电', capacity: '3780.80', share: '32.56%' },
-                            { type: '太阳能', capacity: '3710.13', share: '31.95%' },
-                            { type: '储能', capacity: '659.48', share: '-' }
+                            { type: '火电', capacity: '2650.40', share: '26.90%' },
+                            { type: '水电', capacity: '820.25', share: '8.33%' },
+                            { type: '风电', capacity: '3220.70', share: '32.71%' },
+                            { type: '太阳能', capacity: '3058.80', share: '31.06%' },
+                            { type: '储能', capacity: '530.90', share: '-' }
                         ],
                         pie: [
-                            { name: '火电', value: 3150.21 },
-                            { name: '水电', value: 971.61 },
-                            { name: '风电', value: 3780.8 },
-                            { name: '太阳能', value: 3710.13 },
-                            { name: '储能', value: 659.48 }
+                            { name: '火电', value: 2650.4 },
+                            { name: '水电', value: 820.25 },
+                            { name: '风电', value: 3220.7 },
+                            { name: '太阳能', value: 3058.8 },
+                            { name: '储能', value: 530.9 }
                         ],
-                        note: '数据来源：甘肃电力交易中心披露的装机容量结构'
+                        note: '数据来源：示例演示口径'
                     }
                 },
                 {
@@ -106,20 +106,20 @@
                     title: '现货市场进程',
                     type: 'list',
                     items: [
-                        '2021年5月：开展连续不间断结算试运行，形成现货交易规则雏形',
-                        '2024年9月5日：转入正式运行，标志着现货市场常态化落地'
+                        '2022年：启动试运行与规则验证',
+                        '2025年：进入常态化试运行阶段（示例）'
                     ]
                 },
                 {
                     key: 'C',
-                    title: '现货电价（1-7月统计）',
+                    title: '现货电价（示例统计）',
                     type: 'keyValue',
                     items: [
-                        { label: '平均最低电价', value: '0.099 元/kWh' },
-                        { label: '平均最高电价', value: '0.352 元/kWh' },
-                        { label: '其他费用（系统运行费及线损）', value: '0.03 元/kWh' },
-                        { label: '平均电价差', value: '0.253 元/kWh' },
-                        { label: '河西走廊平均电价差', value: '0.27 元/kWh' }
+                        { label: '平均最低电价', value: '0.085 元/kWh' },
+                        { label: '平均最高电价', value: '0.315 元/kWh' },
+                        { label: '其他费用（系统运行费及线损）', value: '0.025 元/kWh' },
+                        { label: '平均电价差', value: '0.188 元/kWh' },
+                        { label: '核心区域平均电价差', value: '0.205 元/kWh' }
                     ]
                 },
                 {
@@ -129,19 +129,19 @@
                     sections: [
                         {
                             heading: '规则',
-                            items: ['报价上限：15 元/MW', '最小申报单位：0.1 元/MW']
+                            items: ['报价上限：12 元/MW', '最小申报单位：0.1 元/MW']
                         },
                         {
                             heading: '收益公式',
-                            items: ['调频收益 = 调频里程 × K（上限2）× 中标价格（上限15元/MW）']
+                            items: ['调频收益 = 调频里程 × K（上限1.8）× 中标价格（上限12元/MW）']
                         },
                         {
-                            heading: '示例项目（100MW/400MWh）',
+                            heading: '示例项目（80MW/320MWh）',
                             items: [
-                                '年调频里程：432000 MW',
-                                'K：1.85',
-                                '中标价格：15 元/MW',
-                                '调频收益：1199 万元/年'
+                                '年调频里程：360000 MW',
+                                'K：1.6',
+                                '中标价格：12 元/MW',
+                                '调频收益：691 万元/年'
                             ]
                         }
                     ]
@@ -151,35 +151,35 @@
                     title: '容量电价',
                     type: 'keyValue',
                     items: [
-                        { label: '标准', value: '330 元/kW·年' },
-                        { label: '执行期限', value: '2 年' },
-                        { label: '厂用电（用于有效容量计算）', value: '5%' },
-                        { label: '有效容量（示例）', value: '63.33 MW' },
-                        { label: '容量电价收益（示例）', value: '2090 万元/年' },
-                        { label: '两年后预测电价', value: '200 元/kW·年' },
-                        { label: '两年后预测收益', value: '1267 万元/年' }
+                        { label: '标准', value: '280 元/kW·年' },
+                        { label: '执行期限', value: '3 年' },
+                        { label: '厂用电（用于有效容量计算）', value: '6%' },
+                        { label: '有效容量（示例）', value: '52.80 MW' },
+                        { label: '容量电价收益（示例）', value: '1478 万元/年' },
+                        { label: '三年后预测电价', value: '190 元/kW·年' },
+                        { label: '三年后预测收益', value: '1003 万元/年' }
                     ]
                 },
                 {
                     key: 'F',
-                    title: '收益 & 财务（100MW/400MWh）',
+                    title: '收益 & 财务（80MW/320MWh）',
                     type: 'finance',
                     table: {
                         headers: ['首年(万元)', '每年(万元)', '20年(万元)'],
                         rows: [
-                            { label: '电能量交易', values: ['2495', '2196', '43920'] },
-                            { label: '调频', values: ['1199', '1075', '21500'] },
-                            { label: '容量电价', values: ['2090', '1350', '27000'] },
-                            { label: '总收益', values: ['5784', '4621', '92420'] }
+                            { label: '电能量交易', values: ['1820', '1650', '33000'] },
+                            { label: '调频', values: ['691', '620', '12400'] },
+                            { label: '容量电价', values: ['1478', '980', '19600'] },
+                            { label: '总收益', values: ['3989', '3250', '65000'] }
                         ]
                     },
                     metrics: [
-                        { label: 'IRR', value: '9.279%' },
-                        { label: '回收期', value: '7.095 年' }
+                        { label: 'IRR', value: '8.2%' },
+                        { label: '回收期', value: '7.8 年' }
                     ]
                 }
             ],
-            footerNote: '数据来源：《甘肃省独立储能政策分析.pdf》'
+            footerNote: '数据来源：示例演示资料'
         };
 
         const GansuProvinceSidebarText = ({ mode = 'VIEW', onClose, gridList = [], onUploadGrid }) => {
@@ -399,8 +399,8 @@
             }
 
             return (
-                <div className="flex flex-col h-full bg-white">
-                    <div className="sticky top-0 z-10 bg-white border-b border-slate-200 p-6">
+                <div className="flex flex-col h-full bg-white overflow-y-auto">
+                    <div className="bg-white border-b border-slate-200 p-6">
                         <div className="flex items-start justify-between">
                             <div className="space-y-2">
                                 {isEdit ? (
@@ -492,7 +492,7 @@
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                    <div className="p-6 space-y-4">
                         {(data.accordions || []).map((accordion) => (
                             <div key={accordion.key} className="border border-slate-200 rounded-xl shadow-sm">
                                 <button
@@ -822,14 +822,14 @@
                     <line x1="460" y1="330" x2="780" y2="330" stroke="#0ea5e9" stroke-width="3" marker-end="url(#arrow)" />
                     <line x1="460" y1="330" x2="420" y2="410" stroke="#0ea5e9" stroke-width="3" marker-end="url(#arrow)" />
 
-                    <text x="540" y="105" font-size="12" fill="#6b7280">宁夏电网</text>
-                    <text x="525" y="55" font-size="12" fill="#6b7280">新甘电网</text>
-                    <text x="780" y="115" font-size="12" fill="#6b7280">陕西电网</text>
-                    <text x="780" y="345" font-size="12" fill="#6b7280">青海电网</text>
-                    <text x="410" y="430" font-size="12" fill="#6b7280">陇东—陕北联络</text>
-                    <text x="200" y="340" font-size="12" fill="#6b7280">酒泉—瓜州—玉门</text>
-                    <text x="160" y="360" font-size="12" fill="#6b7280">新能源走廊</text>
-                    <text x="630" y="295" font-size="12" fill="#6b7280">河东负荷中心</text>
+                    <text x="540" y="105" font-size="12" fill="#6b7280">示例电网A</text>
+                    <text x="525" y="55" font-size="12" fill="#6b7280">示例电网B</text>
+                    <text x="780" y="115" font-size="12" fill="#6b7280">示例电网C</text>
+                    <text x="780" y="345" font-size="12" fill="#6b7280">示例电网D</text>
+                    <text x="410" y="430" font-size="12" fill="#6b7280">示例联络E</text>
+                    <text x="200" y="340" font-size="12" fill="#6b7280">示例通道F</text>
+                    <text x="160" y="360" font-size="12" fill="#6b7280">示例走廊G</text>
+                    <text x="630" y="295" font-size="12" fill="#6b7280">示例负荷区H</text>
                 </svg>
             `)} `;
 
@@ -837,20 +837,20 @@
 
             // A0. 资源禀赋数据（可扩展、可上传）
             const [resourceEndowment, setResourceEndowment] = useState({
-                '河北省': { wind: 32, solar: 26, hydro: 3, thermal: 45 },
-                '山西省': { wind: 28, solar: 22, hydro: 2, thermal: 58 },
-                '广东省': { wind: 18, solar: 30, hydro: 16, thermal: 38 },
-                '甘肃省': { wind: 40, solar: 35, hydro: 6, thermal: 20 },
-                '河南省': { wind: 20, solar: 24, hydro: 5, thermal: 50 },
-                '江苏省': { wind: 26, solar: 34, hydro: 8, thermal: 40 },
-                '浙江省': { wind: 16, solar: 28, hydro: 12, thermal: 30 },
-                '陕西省': { wind: 30, solar: 22, hydro: 10, thermal: 35 },
-                '青海省': { wind: 22, solar: 40, hydro: 18, thermal: 12 },
-                '四川省': { wind: 14, solar: 18, hydro: 60, thermal: 12 },
-                '云南省': { wind: 20, solar: 22, hydro: 55, thermal: 10 },
-                '辽宁省': { wind: 25, solar: 18, hydro: 8, thermal: 35 },
-                '内蒙古自治区': { wind: 55, solar: 48, hydro: 5, thermal: 20 },
-                '新疆维吾尔自治区': { wind: 50, solar: 52, hydro: 8, thermal: 18 }
+                '河北省': { wind: 21, solar: 18, hydro: 4, thermal: 33 },
+                '山西省': { wind: 24, solar: 19, hydro: 3, thermal: 46 },
+                '广东省': { wind: 15, solar: 26, hydro: 14, thermal: 29 },
+                '甘肃省': { wind: 34, solar: 31, hydro: 7, thermal: 18 },
+                '河南省': { wind: 17, solar: 21, hydro: 6, thermal: 38 },
+                '江苏省': { wind: 20, solar: 27, hydro: 9, thermal: 31 },
+                '浙江省': { wind: 14, solar: 24, hydro: 11, thermal: 26 },
+                '陕西省': { wind: 23, solar: 19, hydro: 12, thermal: 28 },
+                '青海省': { wind: 19, solar: 32, hydro: 16, thermal: 11 },
+                '四川省': { wind: 13, solar: 16, hydro: 48, thermal: 14 },
+                '云南省': { wind: 17, solar: 20, hydro: 44, thermal: 12 },
+                '辽宁省': { wind: 19, solar: 15, hydro: 9, thermal: 29 },
+                '内蒙古自治区': { wind: 42, solar: 36, hydro: 6, thermal: 18 },
+                '新疆维吾尔自治区': { wind: 39, solar: 41, hydro: 9, thermal: 16 }
             });
 
             const [resourceLabels, setResourceLabels] = useState({
@@ -867,172 +867,172 @@
             // A. 二次调频数据 (Frequency Data) - 沿用之前的数据
             const frequencyData = {
                 mapValues: {
-                    '河北省': 5000, '河南省': 4000, '广东省': 5000,
-                    '山西省': 4100, '甘肃省': 2500, '宁夏回族自治区': 500
+                    '河北省': 3200, '河南省': 2800, '广东省': 3600,
+                    '山西省': 2950, '甘肃省': 1800, '宁夏回族自治区': 720
                 },
                 details: {
                     '河北省': {
-                        title: '河北省 (南网)', totalVolume: '5000万元 (储能份额)',
-                        marketVolumeDisplay: '每月储能分摊份额约 5000万元',
-                        tags: ['热度最高', '2026开放'],
-                        details: [{ label: '数据来源', value: '河北南网交易中心市场处主任' }]
+                        title: '河北省（示例A）', totalVolume: '3200万元 (示例份额)',
+                        marketVolumeDisplay: '每月示例分摊份额约 3200万元',
+                        tags: ['示例标签', '开放节点A'],
+                        details: [{ label: '数据来源', value: '演示口径 A-01' }]
                     },
                     '河南省': {
-                        title: '河南省', totalVolume: '4000万元 (储能份额)',
-                        marketVolumeDisplay: '每月储能分摊份额约 4000万元',
-                        tags: ['热度高', '2027开放'],
-                        details: [{ label: '数据来源', value: '河南调度计划处主任' }]
+                        title: '河南省（示例B）', totalVolume: '2800万元 (示例份额)',
+                        marketVolumeDisplay: '每月示例分摊份额约 2800万元',
+                        tags: ['示例标签', '开放节点B'],
+                        details: [{ label: '数据来源', value: '演示口径 B-02' }]
                     },
                     '广东省': {
-                        title: '广东省', totalVolume: '5000万元',
-                        marketVolumeDisplay: '每月独立储能市场总量 5000万元左右',
-                        tags: ['数据详实', '收益占比90%'],
-                        details: [{ label: '数据来源', value: '5-7月收益表' }]
+                        title: '广东省（示例C）', totalVolume: '3600万元',
+                        marketVolumeDisplay: '每月独立储能市场示例总量 3600万元左右',
+                        tags: ['示例口径', '占比参考'],
+                        details: [{ label: '数据来源', value: '演示口径 C-03' }]
                     },
                     '山西省': {
-                        title: '山西省', totalVolume: '4100万元',
-                        marketVolumeDisplay: '每月市场总量 4100万元',
-                        tags: ['市场成熟', '占比80%'],
-                        details: [{ label: '数据来源', value: '实地调研 (1-3月收益表)' }]
+                        title: '山西省（示例D）', totalVolume: '2950万元',
+                        marketVolumeDisplay: '每月市场示例总量 2950万元',
+                        tags: ['示例标签', '参考占比'],
+                        details: [{ label: '数据来源', value: '演示口径 D-04' }]
                     },
                     '甘肃省': {
-                        title: '甘肃省', totalVolume: '2500-2600万元',
-                        marketVolumeDisplay: '25年7-9月调频总额连续上行至约2500-2600万元，同比去年同期抬升',
-                        tags: ['趋势上涨', '半公开披露'],
+                        title: '甘肃省（示例E）', totalVolume: '1800-2000万元',
+                        marketVolumeDisplay: '示例周期内调频总额位于 1800-2000万元区间',
+                        tags: ['示例趋势', '演示披露'],
                         details: [
-                            { label: '数据来源', value: '甘肃电力交易中心半公开披露信息' },
-                            { label: '最新进展', value: '8、9月已上涨至约2600万元' }
+                            { label: '数据来源', value: '演示口径 E-05' },
+                            { label: '最新进展', value: '示例更新：区间中值略有上移' }
                         ]
                     },
                     '宁夏回族自治区': {
-                        title: '宁夏回族自治区', totalVolume: '500万元',
-                        marketVolumeDisplay: '每月总量 500万元左右',
-                        tags: ['涨幅不大', '占比5%'],
-                        details: [{ label: '数据来源', value: '实地调研' }]
+                        title: '宁夏回族自治区（示例F）', totalVolume: '720万元',
+                        marketVolumeDisplay: '每月示例总量 720万元左右',
+                        tags: ['示例标签', '参考占比'],
+                        details: [{ label: '数据来源', value: '演示口径 F-06' }]
                     }
                 },
                 provincePoints: {
                     '甘肃省': [
-                        { name: '陇东基地', coord: [107.63, 35.73], type: 'F', label: '陇东煤电基地', desc: '坑口煤电+外送中心' },
-                        { name: '刘家峡', coord: [103.35, 35.93], type: 'S', label: '黄河梯级水电', desc: '刘家峡调峰主力' }
+                        { name: '西北示例基地', coord: [107.63, 35.73], type: 'F', label: '示例煤电基地A', desc: '示例描述：负荷与外送节点' },
+                        { name: '黄河示例站', coord: [103.35, 35.93], type: 'S', label: '示例水电站B', desc: '示例描述：调峰主力' }
                     ],
                     '宁夏回族自治区': [
-                        { name: '宁东基地', coord: [106.66, 38.16], type: 'F', label: '宁东能源化工', desc: '煤电+化工+光伏' },
-                        { name: '腾格里', coord: [105.00, 37.60], type: 'N', label: '腾格里基地', desc: '沙漠光伏/风电' },
-                        { name: '中宁换流站', coord: [105.67, 37.48], type: 'S', label: '中宁换流站', desc: '宁电入湘送端' }
+                        { name: '示例基地C', coord: [106.66, 38.16], type: 'F', label: '示例能源基地C', desc: '示例描述：多能协同' },
+                        { name: '示例基地D', coord: [105.00, 37.60], type: 'N', label: '示例新能源基地D', desc: '示例描述：风光协同' },
+                        { name: '示例换流站', coord: [105.67, 37.48], type: 'S', label: '示例换流站E', desc: '示例描述：送端节点' }
                     ],
                     '河南省': [
-                        { name: '平顶山', coord: [113.19, 33.76], type: 'F', label: '平顶山煤电', desc: '中原煤电中心' },
-                        { name: '豫西风电', coord: [111.50, 34.50], type: 'N', label: '豫西风电', desc: '洛阳西部山区' },
-                        { name: '豫东光伏', coord: [114.50, 34.60], type: 'N', label: '豫东光伏', desc: '开封周边集中式' }
+                        { name: '示例节点F', coord: [113.19, 33.76], type: 'F', label: '示例煤电节点F', desc: '示例描述：区域负荷中心' },
+                        { name: '示例风电G', coord: [111.50, 34.50], type: 'N', label: '示例风电G', desc: '示例描述：山地风电' },
+                        { name: '示例光伏H', coord: [114.50, 34.60], type: 'N', label: '示例光伏H', desc: '示例描述：集中式基地' }
                     ],
                     '河北省': [
-                        { name: '石家庄', coord: [114.48, 38.03], type: 'F', label: '石家庄热电', desc: '省会负荷中心' },
-                        { name: '冀南光伏', coord: [115.68, 37.73], type: 'N', label: '冀南光伏', desc: '衡水平原光伏带' }
+                        { name: '示例热电I', coord: [114.48, 38.03], type: 'F', label: '示例热电I', desc: '示例描述：负荷中心' },
+                        { name: '示例光伏J', coord: [115.68, 37.73], type: 'N', label: '示例光伏J', desc: '示例描述：平原光伏带' }
                     ],
                     '广东省': [
-                        { name: '粤西煤电', coord: [110.35, 21.27], type: 'F', label: '粤西煤电', desc: '湛江沿海基地' },
-                        { name: '粤东煤电', coord: [116.37, 23.55], type: 'F', label: '粤东煤电', desc: '揭阳/惠来基地' },
-                        { name: '阳江风电', coord: [111.98, 21.4], type: 'N', label: '阳江海上风电', desc: '近海风电集群' },
-                        { name: '汕尾风电', coord: [115.6, 22.6], type: 'N', label: '汕尾海上风电', desc: '甲子海域' }
+                        { name: '示例煤电K', coord: [110.35, 21.27], type: 'F', label: '示例煤电K', desc: '示例描述：沿海基地' },
+                        { name: '示例煤电L', coord: [116.37, 23.55], type: 'F', label: '示例煤电L', desc: '示例描述：负荷支撑' },
+                        { name: '示例风电M', coord: [111.98, 21.4], type: 'N', label: '示例海上风电M', desc: '示例描述：近海集群' },
+                        { name: '示例风电N', coord: [115.6, 22.6], type: 'N', label: '示例海上风电N', desc: '示例描述：示范海域' }
                     ]
                 },
                 provinceBelts: {
-                    '甘肃省': [{ name: '河西走廊新能源带', type: 'N', coords: [[98.50, 39.75], [96.5, 40.5]], label: '酒泉-瓜州-玉门 基地带' }],
-                    '河南省': [{ name: '豫北煤电带', type: 'F', coords: [[114.35, 36.10], [114.29, 35.74]], label: '安阳-鹤壁 煤电带' }],
-                    '河北省': [{ name: '冀南钢铁煤电带', type: 'F', coords: [[114.50, 37.06], [114.47, 36.60]], label: '邢台-邯郸 煤电钢铁带' }],
-                    '广东省': [{ name: '珠江口核电走廊', type: 'S', coords: [[112.93, 21.92], [114.54, 22.60], [114.8, 22.7]], label: '珠江口核电走廊' }]
+                    '甘肃省': [{ name: '示例新能源走廊', type: 'N', coords: [[98.50, 39.75], [96.5, 40.5]], label: '示例基地带A' }],
+                    '河南省': [{ name: '示例煤电带', type: 'F', coords: [[114.35, 36.10], [114.29, 35.74]], label: '示例煤电带B' }],
+                    '河北省': [{ name: '示例产业带', type: 'F', coords: [[114.50, 37.06], [114.47, 36.60]], label: '示例产业带C' }],
+                    '广东省': [{ name: '示例沿海走廊', type: 'S', coords: [[112.93, 21.92], [114.54, 22.60], [114.8, 22.7]], label: '示例走廊D' }]
                 }
             };
 
             const gansuUnifiedOverlay = {
                 points: [
-                    { name: '河西新能源基地群', coord: [97.3, 39.8], type: 'N', label: '酒泉-瓜州-玉门 风光基地', desc: '河西走廊风光大基地集群' },
-                    { name: '张掖枢纽', coord: [100.45, 38.93], type: 'N', label: '张掖枢纽', desc: '新能源集结/送出节点' },
-                    { name: '金昌枢纽', coord: [102.2, 38.52], type: 'N', label: '金昌-武威通道', desc: '河西并网汇集' },
-                    { name: '兰州负荷中心', coord: [103.84, 36.06], type: 'L', label: '河东负荷中心', desc: '兰州-白银-定西负荷中心' },
-                    { name: '陇东联络', coord: [107.0, 35.6], type: 'L', label: '陇东—陕北联络', desc: '庆阳/平凉方向负荷' }
+                    { name: '西部示例基地群', coord: [97.3, 39.8], type: 'N', label: '示例风光基地A', desc: '示例描述：风光集群节点' },
+                    { name: '示例枢纽B', coord: [100.45, 38.93], type: 'N', label: '示例枢纽B', desc: '示例描述：集结/送出节点' },
+                    { name: '示例枢纽C', coord: [102.2, 38.52], type: 'N', label: '示例通道C', desc: '示例描述：并网汇集' },
+                    { name: '示例负荷中心', coord: [103.84, 36.06], type: 'L', label: '示例负荷中心', desc: '示例描述：主负荷区' },
+                    { name: '示例联络D', coord: [107.0, 35.6], type: 'L', label: '示例联络D', desc: '示例描述：东部负荷方向' }
                 ],
                 belts: [
-                    { name: '河西新能源走廊', type: 'N', coords: [[95.5, 40.6], [101.4, 40.3], [101.2, 39.2], [95.3, 39.3]], label: '河西新能源走廊' },
-                    { name: '河东负荷区', type: 'L', coords: [[102.6, 36.9], [106.5, 36.6], [106.2, 35.1], [102.2, 35.4]], label: '河东负荷中心' }
+                    { name: '示例新能源走廊', type: 'N', coords: [[95.5, 40.6], [101.4, 40.3], [101.2, 39.2], [95.3, 39.3]], label: '示例新能源走廊' },
+                    { name: '示例负荷区', type: 'L', coords: [[102.6, 36.9], [106.5, 36.6], [106.2, 35.1], [102.2, 35.4]], label: '示例负荷中心' }
                 ],
                 connections: [
-                    { coords: [[97.3, 39.8], [103.84, 36.06]], type: 'N', label: '河西—河东主干网', desc: '新能源外送主力通道', width: 3 },
-                    { coords: [[97.3, 39.8], [100.45, 38.93]], type: 'N', label: '酒泉—张掖', desc: '风光基地并网', width: 2 },
-                    { coords: [[100.45, 38.93], [102.2, 38.52]], type: 'N', label: '张掖—金昌', desc: '河西主支架', width: 2 },
-                    { coords: [[102.2, 38.52], [103.84, 36.06]], type: 'N', label: '金昌—兰州', desc: '接入河东负荷', width: 2 },
-                    { coords: [[103.84, 36.06], [107.0, 35.6]], type: 'L', label: '兰州—陇东', desc: '东部负荷/外送', width: 2 },
-                    { coords: [[103.84, 36.06], [101.0, 35.9]], type: 'S', label: '兰州—青海联络', desc: '联络青海电网', width: 2, curveness: 0.15 },
-                    { coords: [[103.84, 36.06], [105.7, 37.5]], type: 'S', label: '兰州—宁夏联络', desc: '联络宁夏电网', width: 2, curveness: 0.12 },
-                    { coords: [[107.0, 35.6], [108.8, 34.9]], type: 'S', label: '陇东—关中', desc: '向陕甘两向送出', width: 2, curveness: 0.12 }
+                    { coords: [[97.3, 39.8], [103.84, 36.06]], type: 'N', label: '示例主干网', desc: '示例描述：外送通道', width: 3 },
+                    { coords: [[97.3, 39.8], [100.45, 38.93]], type: 'N', label: '示例通道1', desc: '示例描述：基地并网', width: 2 },
+                    { coords: [[100.45, 38.93], [102.2, 38.52]], type: 'N', label: '示例通道2', desc: '示例描述：主支架', width: 2 },
+                    { coords: [[102.2, 38.52], [103.84, 36.06]], type: 'N', label: '示例通道3', desc: '示例描述：负荷接入', width: 2 },
+                    { coords: [[103.84, 36.06], [107.0, 35.6]], type: 'L', label: '示例联络A', desc: '示例描述：负荷/外送', width: 2 },
+                    { coords: [[103.84, 36.06], [101.0, 35.9]], type: 'S', label: '示例联络B', desc: '示例描述：跨区联络', width: 2, curveness: 0.15 },
+                    { coords: [[103.84, 36.06], [105.7, 37.5]], type: 'S', label: '示例联络C', desc: '示例描述：电网联络', width: 2, curveness: 0.12 },
+                    { coords: [[107.0, 35.6], [108.8, 34.9]], type: 'S', label: '示例联络D', desc: '示例描述：双向送出', width: 2, curveness: 0.12 }
                 ]
             };
 
             // B. 电能量数据 (Energy Data)
             const rawEnergyPriceData = {
-                '北京市': { range: [0.318, 0.596], display: '0.318~0.596 元/kWh', note: '华北：峰谷价差区间', category: 'market' },
-                '天津市': { value: 0.51, display: '0.51 元/kWh', note: '华北：单次谷充峰放测算', category: 'market' },
-                '河北省': { range: [0.43, 0.6], display: '0.43–0.6 元/kWh', note: '两充两放价差约 0.43；一充一放约 0.6', category: 'actual' },
-                '山东省': { value: 0.601, display: '0.601 元/kWh', note: '华北：单次谷充峰放', category: 'market' },
-                '山西省': { value: 0.45, display: '0.45 元/kWh', note: '华北：测算价差', category: 'actual' },
-                '安徽省': { range: [0.257, 0.607], display: '0.257~0.607 元/kWh', note: '华东：峰谷价差区间', category: 'market' },
-                '福建省': { range: [0.216, 0.452], display: '0.216~0.452 元/kWh', note: '华东：峰谷价差区间', category: 'market' },
-                '上海市': { value: 0.679, display: '0.679 元/kWh（只能做一次谷充峰放）', note: '华东：单次操作', category: 'market' },
-                '江苏省': { value: 0.2, display: '0.2 元/kWh', note: '华东：实测价差', category: 'actual' },
-                '浙江省': { value: 0.1, display: '0.1 元/kWh', note: '华东：实测价差', category: 'actual' },
-                '河南省': { value: 0.4, display: '0.4 元/kWh', note: '华中：实测价差', category: 'actual' },
-                '湖北省': { range: [0.229, 0.562], display: '0.229~0.562 元/kWh（全年 2 小时尖峰）', note: '华中：两小时尖峰窗口', category: 'market' },
-                '湖南省': { range: [0.246, 0.492], display: '0.246~0.492 元/kWh', note: '华中：峰谷价差区间', category: 'market' },
-                '江西省': { range: [0.273, 0.547], display: '0.273~0.547 元/kWh', note: '华中：峰谷价差区间', category: 'market' },
-                '吉林省': { value: 0.469, display: '0.469 元/kWh', note: '东北：单次谷充峰放', category: 'market' },
-                '黑龙江省': { value: 0.395, display: '0.395 元/kWh', note: '东北：单次谷充峰放', category: 'market' },
-                '辽宁省': { value: 0.423, display: '0.423 元/kWh', note: '东北：单次谷充峰放', category: 'market' },
-                '内蒙古自治区': { range: [0.223, 0.407], display: '蒙东：0.342；蒙西：0.223~0.407 元/kWh', note: '蒙东全年两次谷段充电 + 高峰放电；蒙西为峰谷区间', category: 'market' },
-                '甘肃省': { value: 0.27, display: '0.27 元/kWh（河西均价约 0.27）', note: '454 个节点，河西均价约 0.27', category: 'actual' },
-                '宁夏回族自治区': { value: 0.32, display: '0.32 元/kWh（可做金融套利）', note: '可做金融套利', category: 'actual' },
-                '青海省': { range: [0.231, 0.455], display: '0.231~0.455 元/kWh', note: '西北：峰谷价差区间', category: 'market' },
-                '陕西省': { value: 0.4, display: '0.4 元/kWh', note: '西北：实测价差', category: 'actual' },
-                '新疆维吾尔自治区': { range: [0.136, 0.290], display: '0.136~0.290 元/kWh', note: '西北：峰谷价差区间', category: 'market' },
-                '四川省': { range: [0.166, 0.332], display: '0.166~0.332 元/kWh', note: '西南：峰谷价差区间', category: 'market' },
-                '重庆市': { range: [0.262, 0.533], display: '0.262~0.533 元/kWh', note: '西南：峰谷价差区间', category: 'market' },
-                '广东省': { value: 0.18, display: '0.18 元/kWh', note: '南网：实测价差', category: 'actual' },
-                '广西壮族自治区': { range: [0.205, 0.411], display: '0.205~0.411 元/kWh', note: '南网：峰谷价差区间', category: 'market' },
-                '贵州省': { range: [0.231, 0.463], display: '0.231~0.463 元/kWh', note: '南网：峰谷价差区间', category: 'market' },
-                '云南省': { value: 0.28, display: '0.28 元/kWh', note: '南网：单次谷充峰放', category: 'market' },
-                '海南省': { range: [0.397, 0.737], display: '0.397~0.737 元/kWh', note: '南网：峰谷价差区间', category: 'market' }
+                '北京市': { range: [0.28, 0.53], display: '0.28~0.53 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '天津市': { value: 0.46, display: '0.46 元/kWh', note: '示例：单次测算', category: 'market' },
+                '河北省': { range: [0.36, 0.55], display: '0.36–0.55 元/kWh', note: '示例：多次/单次区间', category: 'actual' },
+                '山东省': { value: 0.57, display: '0.57 元/kWh', note: '示例：单次测算', category: 'market' },
+                '山西省': { value: 0.41, display: '0.41 元/kWh', note: '示例：测算价差', category: 'actual' },
+                '安徽省': { range: [0.22, 0.52], display: '0.22~0.52 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '福建省': { range: [0.19, 0.41], display: '0.19~0.41 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '上海市': { value: 0.62, display: '0.62 元/kWh（示例限制）', note: '示例：单次操作', category: 'market' },
+                '江苏省': { value: 0.17, display: '0.17 元/kWh', note: '示例：实测价差', category: 'actual' },
+                '浙江省': { value: 0.12, display: '0.12 元/kWh', note: '示例：实测价差', category: 'actual' },
+                '河南省': { value: 0.33, display: '0.33 元/kWh', note: '示例：实测价差', category: 'actual' },
+                '湖北省': { range: [0.21, 0.50], display: '0.21~0.50 元/kWh（示例尖峰）', note: '示例：尖峰窗口', category: 'market' },
+                '湖南省': { range: [0.22, 0.45], display: '0.22~0.45 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '江西省': { range: [0.24, 0.48], display: '0.24~0.48 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '吉林省': { value: 0.43, display: '0.43 元/kWh', note: '示例：单次测算', category: 'market' },
+                '黑龙江省': { value: 0.36, display: '0.36 元/kWh', note: '示例：单次测算', category: 'market' },
+                '辽宁省': { value: 0.39, display: '0.39 元/kWh', note: '示例：单次测算', category: 'market' },
+                '内蒙古自治区': { range: [0.20, 0.36], display: '0.20~0.36 元/kWh', note: '示例：区间测算', category: 'market' },
+                '甘肃省': { value: 0.23, display: '0.23 元/kWh（示例均价）', note: '示例节点均价', category: 'actual' },
+                '宁夏回族自治区': { value: 0.27, display: '0.27 元/kWh（示例说明）', note: '示例：可做金融套利', category: 'actual' },
+                '青海省': { range: [0.20, 0.41], display: '0.20~0.41 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '陕西省': { value: 0.35, display: '0.35 元/kWh', note: '示例：实测价差', category: 'actual' },
+                '新疆维吾尔自治区': { range: [0.12, 0.26], display: '0.12~0.26 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '四川省': { range: [0.15, 0.30], display: '0.15~0.30 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '重庆市': { range: [0.23, 0.49], display: '0.23~0.49 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '广东省': { value: 0.16, display: '0.16 元/kWh', note: '示例：实测价差', category: 'actual' },
+                '广西壮族自治区': { range: [0.19, 0.38], display: '0.19~0.38 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '贵州省': { range: [0.21, 0.42], display: '0.21~0.42 元/kWh', note: '示例：峰谷价差区间', category: 'market' },
+                '云南省': { value: 0.25, display: '0.25 元/kWh', note: '示例：单次测算', category: 'market' },
+                '海南省': { range: [0.33, 0.62], display: '0.33~0.62 元/kWh', note: '示例：峰谷价差区间', category: 'market' }
             };
 
             const provinceReportNotes = {
                 '青海省': {
-                    summary: '截至2025年9月8日，全口径装机容量约 7728.525 万千瓦，新能源装机占比 72.13%，风光装机比例约 3:1，西部西宁主力电网与中部电网相连。',
-                    extraTags: ['装机 7728.525 万千瓦', '新能源占比 72.13%'],
+                    summary: '截至示例时点，全口径装机容量约 6500 万千瓦，新能源装机占比 68%，风光装机比例约 2.5:1，主网与周边电网保持联络。',
+                    extraTags: ['装机 6500 万千瓦', '新能源占比 68%'],
                     details: [
                         {
                             label: '能源与电网概况',
-                            value: '水电 1639.218 万千瓦（21.21%）、火电 699.200 万千瓦（9.04%）、风电 1353.315 万千瓦（17.51%）、太阳能 3547.29 万千瓦（45.90%）、储能 519.44 万千瓦（6.71%）。'
+                            value: '水电 1400 万千瓦（21%）、火电 620 万千瓦（10%）、风电 1200 万千瓦（18%）、太阳能 2800 万千瓦（43%）、储能 480 万千瓦（8%）。'
                         },
                         {
                             label: '电网频率与外送通道',
-                            value: '单一电网与外送通道较为薄弱，西部西宁主力电网与中部电网相连，电力以外送为主，电网通道数量较少。'
+                            value: '示例说明：外送通道与主网联络保持稳定，通道数量适中。'
                         }
                     ]
                 },
                 '甘肃省': {
-                    summary: '截至2025年9月，装机容量约 11162.75 万千瓦，新能源装机占比 58.65%，风光装机占比超过 58%。',
-                    extraTags: ['装机 11162.75 万千瓦', '新能源占比 58.65%'],
+                    summary: '截至示例时点，装机容量约 9200 万千瓦，新能源装机占比 56%，风光装机占比约 55%。',
+                    extraTags: ['装机 9200 万千瓦', '新能源占比 56%'],
                     details: [
                         {
                             label: '能源与电网概况',
-                            value: '火电 3017.51 万千瓦（27.13%）、水电 971.28 万千瓦（8.70%）、风电 3710.80 万千瓦（33.27%）、太阳能 2803.93 万千瓦（25.12%）、储能 659.48 万千瓦（5.91%）。'
+                            value: '火电 2500 万千瓦（27%）、水电 820 万千瓦（9%）、风电 3000 万千瓦（33%）、太阳能 2300 万千瓦（25%）、储能 580 万千瓦（6%）。'
                         },
                         {
                             label: '电网频率与外送通道',
-                            value: '电网频率高，双向并网，网强度高且外送通道较多，线路包括双回路，出口以多个直流外送通道为主。'
+                            value: '示例说明：双向联络与外送通道并存，通道布局较为均衡。'
                         },
                         {
                             label: '电力负荷与需求',
-                            value: '电力负荷需求较高，工业用电为主，工商业负荷占比较大，电力供应较为紧张。'
+                            value: '示例说明：工业与商业负荷均衡，峰谷特性较明显。'
                         }
                     ]
                 }
@@ -1326,58 +1326,58 @@
             };
 
             const longTermPolicyData = buildPolicyData([
-                ['北京', 1], ['天津', 3], ['河北南网', 3], ['冀北', 3], ['山东', 2], ['山西', 2],
-                ['安徽', 3], ['福建', 3], ['上海', 2], ['江苏', 2], ['浙江', 2], ['湖北', 2],
-                ['湖南', 2], ['河南', 2], ['江西', 2], ['吉林', 3], ['黑龙江', 3], ['辽宁', 2],
-                ['甘肃', 2], ['宁夏', 3], ['青海', 3], ['陕西', 3], ['新疆', 3], ['四川', 3],
-                ['重庆', 2], ['蒙西', 2], ['广东', 3], ['广西', 3], ['贵州', 3], ['云南', 2], ['海南', 3]
+                ['北京', 2], ['天津', 2], ['河北南网', 2], ['冀北', 1], ['山东', 3], ['山西', 1],
+                ['安徽', 2], ['福建', 2], ['上海', 1], ['江苏', 3], ['浙江', 1], ['湖北', 2],
+                ['湖南', 3], ['河南', 2], ['江西', 1], ['吉林', 2], ['黑龙江', 1], ['辽宁', 3],
+                ['甘肃', 1], ['宁夏', 2], ['青海', 2], ['陕西', 3], ['新疆', 2], ['四川', 1],
+                ['重庆', 2], ['蒙西', 1], ['广东', 3], ['广西', 2], ['贵州', 1], ['云南', 2], ['海南', 2]
             ], '中长期政策');
 
             const spotPolicyData = buildPolicyData([
-                ['北京', 1], ['天津', 1], ['河北南网', 3], ['冀北', 1], ['山东', 3], ['山西', 3],
-                ['安徽', 3], ['福建', 3], ['上海', 2], ['江苏', 3], ['浙江', 3], // 浙江目前不参与现货
-                ['湖北', 3],
-                ['湖南', 3], ['河南', 3], ['江西', 3], ['吉林', 3], ['黑龙江', 3], ['辽宁', 3],
-                ['甘肃', 3], ['宁夏', 3], ['青海', 3], ['陕西', 3], ['新疆', 3], ['四川', 3],
-                ['重庆', 3], ['蒙西', 3], ['广东', 3], ['广西', 3], ['贵州', 3], ['云南', 3], ['海南', 3]
+                ['北京', 1], ['天津', 2], ['河北南网', 2], ['冀北', 1], ['山东', 3], ['山西', 2],
+                ['安徽', 2], ['福建', 2], ['上海', 1], ['江苏', 3], ['浙江', 2],
+                ['湖北', 2],
+                ['湖南', 2], ['河南', 2], ['江西', 1], ['吉林', 2], ['黑龙江', 1], ['辽宁', 2],
+                ['甘肃', 2], ['宁夏', 2], ['青海', 2], ['陕西', 3], ['新疆', 2], ['四川', 1],
+                ['重庆', 2], ['蒙西', 2], ['广东', 3], ['广西', 2], ['贵州', 2], ['云南', 2], ['海南', 2]
             ], '现货政策');
 
             const spotProgressData = buildSpotProgressData([
-                ['北京', 0, '表格中未给出北京现货市场进程的具体说明'],
-                ['天津', 0, '表格中未给出天津现货市场进程的具体说明'],
-                ['河北南网', 4, '2023年9月开始首次结算试运行，2024年11月进行第二轮长周期结算试运行，2025年3月1日起开展连续结算试运行'],
-                ['冀北', 0, '表格中未给出冀北现货市场进程的具体说明'],
-                ['山东', 5, '自2021年12月起开展长周期不间断结算试运行并持续推进，2024年6月17日转入现货市场正式运行'],
-                ['山西', 5, '2021年4月起连续三个月开展结算试运行，2023年12月22日转入现货市场正式运行'],
-                ['安徽', 4, '2024年5月进行第一次整月结算试运行，2024年12月31日起开展连续结算试运行'],
-                ['福建', 3, '2024年11月开展首次全月结算试运行，2025年3月进入长周期结算试运行阶段'],
-                ['上海', 4, '2025年初多次结算试运行并在5月完成整月结算试运行，同年10月29日启动连续结算试运行'],
-                ['江苏', 4, '2024年12月完成第六次结算试运行，2025年6月1日开展长周期结算试运行并于9月起进入连续结算试运行'],
-                ['浙江', 5, '2024年5月启动长周期连续结算试运行，2025年8月7日起转入现货市场正式运行'],
-                ['湖北', 5, '2024年4月16日开展第二轮长周期结算试运行，2025年6月6日起转入现货市场正式运行'],
-                ['湖南', 4, '2024年11月开展首次整月结算试运行和后续结算试运行，2025年10月28日起启动连续结算试运行'],
-                ['河南', 3, '2024年5月15日至6月14日开展结算试运行，2025年9月开展整月结算试运行'],
-                ['江西', 4, '2023年6月14日首次结算试运行，2025年8月下旬至9月进行调电试运行并于10月1日起进入连续结算阶段'],
-                ['吉林', 4, '2024年11月中旬进行第一次结算试运行，2025年7月2日完成首次整月结算，并从9月1日起启动连续结算试运行'],
-                ['黑龙江', 4, '2022年12月先后开展模拟试运行和调电试运行，2025年8月1日起进行连续结算试运行'],
-                ['辽宁', 4, '2024年11月开展首次整月结算试运行，2025年3月1日起开展连续结算试运行'],
-                ['蒙东', 4, '2025年3月中旬开展首次结算试运行，7月31日完成整月结算试运行并于10月20日转入连续结算试运行'],
-                ['甘肃', 5, '2021年5月起开展连续不间断结算试运行，2024年9月5日转入现货市场正式运行'],
-                ['宁夏', 4, '2024年11月开展首次整月结算试运行，2025年5月下旬至7月开展多次结算试运行并计划自10月1日起进入连续结算试运行'],
-                ['青海', 4, '2024年11月上旬首次结算试运行，2025年多次结算试运行后自10月28日起开始连续试运行'],
-                ['陕西', 4, '2024年5月15日至6月13日开展整月结算试运行，并于2024年12月31日进入连续结算试运行'],
-                ['新疆', 4, '2024年12月下旬及2025年多次开展结算试运行，2025年10月11日转入更高级别的连续运行阶段'],
-                ['四川', 3, '2020年9月进行水电竞价连续720小时结算试运行，2022年7月开展水电现货调电试运行，2025年6月至9月安排模拟试运行'],
-                ['重庆', 4, '2024年11月完成首次整月结算试运行，2025年5月至6月进行长周期多月结算试运行并计划自11月1日起启动连续结算试运行'],
-                ['蒙西', 5, '2022年6月1日启动连续结算试运行，2025年2月24日转入现货市场正式运行'],
-                ['省间（国网、蒙西）', 5, '2022年1月启动试运行，2024年10月15日转入正式运行'],
-                ['广东', 5, '2019年5月启动现货市场结算试运行，2023年12月28日转入正式运行'],
-                ['广西', 4, '2024年11月开展全月结算试运行，2025年6月29日起转入连续结算试运行'],
-                ['贵州', 4, '2024年11月开展全月结算试运行，2025年6月29日起转入连续结算试运行'],
-                ['云南', 4, '2024年11月开展全月结算试运行，2025年6月29日起转入连续结算试运行'],
-                ['海南', 4, '2024年11月开展全月结算试运行，2025年6月29日起转入连续结算试运行'],
-                ['南方区域', 4, '南方区域整体在2024年11月开展全月结算试运行并于2025年6月29日起进入连续结算试运行'],
-                ['省间(国网与蒙西)', 6, '省间现货市场自2022年1月启动试运行并于2024年10月15日转入正式运行']
+                ['北京', 1, '示例说明：处于初步验证阶段'],
+                ['天津', 1, '示例说明：处于初步验证阶段'],
+                ['河北南网', 3, '示例说明：已完成多轮试运行'],
+                ['冀北', 1, '示例说明：处于初步验证阶段'],
+                ['山东', 5, '示例说明：进入常态化运行'],
+                ['山西', 4, '示例说明：推进长周期试运行'],
+                ['安徽', 3, '示例说明：完成阶段性试运行'],
+                ['福建', 3, '示例说明：开展全月结算试运行'],
+                ['上海', 3, '示例说明：完成多次试运行'],
+                ['江苏', 4, '示例说明：进入连续试运行阶段'],
+                ['浙江', 4, '示例说明：推进连续试运行'],
+                ['湖北', 4, '示例说明：进入连续试运行阶段'],
+                ['湖南', 3, '示例说明：完成整月试运行'],
+                ['河南', 2, '示例说明：完成短周期试运行'],
+                ['江西', 3, '示例说明：完成调电试运行'],
+                ['吉林', 3, '示例说明：完成整月试运行'],
+                ['黑龙江', 3, '示例说明：开展连续试运行'],
+                ['辽宁', 3, '示例说明：完成整月试运行'],
+                ['蒙东', 3, '示例说明：完成阶段性试运行'],
+                ['甘肃', 4, '示例说明：进入稳定试运行'],
+                ['宁夏', 3, '示例说明：开展多轮试运行'],
+                ['青海', 3, '示例说明：多轮试运行后进入连续阶段'],
+                ['陕西', 3, '示例说明：完成整月试运行'],
+                ['新疆', 3, '示例说明：进入连续试运行阶段'],
+                ['四川', 2, '示例说明：处于调电/模拟试运行'],
+                ['重庆', 3, '示例说明：完成多月试运行'],
+                ['蒙西', 4, '示例说明：进入常态化试运行'],
+                ['省间（国网、蒙西）', 4, '示例说明：跨区试运行推进中'],
+                ['广东', 5, '示例说明：常态化运行'],
+                ['广西', 3, '示例说明：完成全月试运行'],
+                ['贵州', 3, '示例说明：完成全月试运行'],
+                ['云南', 3, '示例说明：完成全月试运行'],
+                ['海南', 3, '示例说明：完成全月试运行'],
+                ['南方区域', 3, '示例说明：区域试运行推进中'],
+                ['省间(国网与蒙西)', 5, '示例说明：跨区运行等级较高']
             ], longTermPolicyData, spotPolicyData);
 
             // --- 辅助数据 ---
